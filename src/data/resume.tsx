@@ -9,62 +9,42 @@ export const DATA = {
   location: "Edinburgh, UK",
   locationLink: "https://www.google.com/maps/place/edinburgh",
   description:
-    "AI & Computer Science student @ University of Edinburgh. I build agentic AI, LLM-powered developer tools, and AI for bio.",
+    "I study AI and Computer Science at Edinburgh. I build small, practical tools around agents, developer workflows, and bio-AI.",
   summary:
-    "Artificial Intelligence & Computer Science student at the University of Edinburgh, beneficiary of the fully-funded Azerbaijani State Scholarship scheme. My areas of interest are agent-based AI and language-model-powered developer tools. I have internship experience in fin-tech production development, have authored open-source Python libraries with 6,000+ total downloads, and build AI systems spanning metabolic modelling, agentic AI, and developer tooling at hackathons and in research.",
+    "I am an Artificial Intelligence and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I like building things that make a technical idea easier to use: an agent safety layer, a tool that turns repos into MCP servers, bio-AI pipelines, and small Python libraries people actually install. I also write about what I learn, because explaining a topic usually shows me what I still do not understand.",
+  proofPoints: [
+    "6,000+ downloads on PyPI",
+    "Built at AI Engine and BioHackathon",
+    "Worked on production fintech code",
+    "Studying AI + CS at Edinburgh",
+  ],
   avatarUrl: "https://avatars.githubusercontent.com/u/151031540?v=4",
   skills: [
-    "Claude API",
-    "MCP",
-    "Cursor",
-    "Agent Orchestration",
-    "Workflow Automation",
-    "Prompt Engineering",
-    "LLM Evaluation",
-
     "Python",
+    "TypeScript/JavaScript",
+    "SQL",
+    "C++",
     "Java",
     "C#",
-    "C++",
-    "TypeScript",
-    "JavaScript",
+    "Bash",
 
-    "Node.js",
-    "Next.js",
     "FastAPI",
     "Flask",
-    "Streamlit",
-    "ASP.NET MVC",
-    "REST APIs",
+    "Node.js",
     "PostgreSQL",
-
     "Docker",
-    "Kubernetes",
-    "GitHub Actions",
-    "GitLab CI",
     "Linux",
-    "Bash",
     "Git",
+    "CI/CD",
+    "Kubernetes",
 
-    "Machine Learning",
-    "Artificial Intelligence",
-    "NLP Pipelines",
-    "Model Evaluation",
-    "Dataset Curation",
-    "Protein Language Models (ESM C)",
-
+    "PyTorch",
+    "TensorFlow",
+    "NumPy",
+    "Pandas",
     "COBRApy",
-    "BioPython",
+    "Biopython",
     "DIAMOND",
-    "Gurobi",
-    "Genome-Scale Metabolic Modelling",
-    "Metabolic Modelling (FBA/FVA)",
-
-    "Unity",
-    "Eye Tracking",
-
-    "Data Structures & Algorithms",
-    "Problem Solving",
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -122,7 +102,7 @@ export const DATA = {
       start: "June 2024",
       end: "September 2024",
       description:
-        "Developed production features and REST APIs using C# ASP.NET MVC, supporting real-world fintech applications. Added integration tests and contributed to CI pipelines, improving code validation and release confidence. Produced incident reports and technical documentation for production issues. Collaborated via Git/GitLab workflows, including team code reviews and pull requests.",
+        "Worked on production features and REST APIs in C# ASP.NET MVC. I also wrote integration tests, helped with CI checks, documented issues, and got used to the everyday rhythm of code reviews and GitLab workflows.",
     },
   ],
   education: [
@@ -134,7 +114,7 @@ export const DATA = {
       start: "2025",
       end: "2029",
       description:
-        "Relevant coursework: Cognitive Science, Object-Oriented Programming, Functional Programming, Databases, Introduction to AI/ML, Algorithms, Data Structures, Linear Algebra.",
+        "Current focus: AI, cognitive science, functional programming, databases, algorithms, data structures, and linear algebra.",
     },
   ],
   projects: [
@@ -143,10 +123,37 @@ export const DATA = {
       category: "Agentic AI",
       featured: true,
       href: "https://github.com/mammadovziya/circuit-breaker",
+      slug: "circuit-breaker",
+      caseStudyHref: "/projects/circuit-breaker",
       dates: "2026",
       active: true,
       description:
-        "Real-time oversight layer that intercepts and risk-scores AI finance agent actions before execution using GPT-4 as a risk assessor. Prevents catastrophic automated trades by enforcing configurable risk thresholds and generating structured audit logs. Built at AI Engine Hackathon, Scotland.",
+        "A guardrail for AI finance agents. Before an agent runs an action, circuit breaker checks the risk, compares it with a threshold, and keeps a clear log of what happened. I built it at AI Engine Hackathon in Scotland.",
+      proof: [
+        "GPT-4 risk assessor",
+        "Pre-execution guardrails",
+        "Structured audit logs",
+      ],
+      caseStudy: {
+        eyebrow: "Agentic AI oversight",
+        role: "I built the prototype at AI Engine Hackathon in Scotland.",
+        problem:
+          "AI agents can call finance tools very quickly. That is useful, but it also means a risky action can happen before a person has time to notice.",
+        solution:
+          "The idea is simple: put a small checkpoint before the real action. The agent proposes an action, GPT-4 gives a risk score and reason, and the system decides whether to allow, review, or block it.",
+        impact: [
+          "Showed how an agent can be checked before it touches a finance tool.",
+          "Made the reason for each decision easy to inspect later.",
+          "Kept the risk thresholds separate from the agent code, so the rules can change without rewriting everything.",
+        ],
+        architecture: [
+          "A small schema for the action the agent wants to run.",
+          "A risk prompt that returns severity, confidence, and a short explanation.",
+          "A decision gate that stops the action if it crosses the threshold.",
+        ],
+        tradeoffs:
+          "This is not trying to be the fastest possible path. It is more useful when the action is important enough that a small review step is worth it.",
+      },
       technologies: ["Python", "GPT-4", "TypeScript", "Agent Oversight"],
       links: [
         {
@@ -155,7 +162,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/circuit-breaker",
       video: "",
     },
     {
@@ -163,10 +170,37 @@ export const DATA = {
       category: "AI for Bio",
       featured: true,
       href: "https://github.com/mammadovziya/gemiz",
+      slug: "gemiz",
+      caseStudyHref: "/projects/gemiz",
       dates: "2026",
       active: true,
       description:
-        "Genome-scale metabolic model reconstruction tool designed to replace CarveMe and gapseq for both bacteria and eukaryotes. Integrates ESM C 600M protein language model embeddings as a novel second-order scoring method for reaction–gene mapping. Benchmarked against gold-standard GEMs (iML1515, iJO1366) with an ablation study comparing full pipeline vs. --no-esm baseline.",
+        "A tool for reconstructing genome-scale metabolic models. I wanted to see whether protein-language-model embeddings could help with reaction-gene mapping, so I added ESM C 600M scoring and compared it with a no-ESM baseline.",
+      proof: [
+        "ESM C 600M embeddings",
+        "Ablation benchmark",
+        "Bacteria + eukaryotes",
+      ],
+      caseStudy: {
+        eyebrow: "AI for bio",
+        role: "I built the reconstruction pipeline and the benchmark setup.",
+        problem:
+          "Most GEM reconstruction tools lean heavily on homology. That works well in many cases, but I wanted to test whether protein embeddings could add another useful signal.",
+        solution:
+          "gemiz combines sequence search, reaction evidence, COBRApy model building, and an ESM C embedding score. Then it solves and checks the model instead of stopping at annotation.",
+        impact: [
+          "Benchmarked the approach against gold-standard E. coli models like iML1515 and iJO1366.",
+          "Added a no-ESM mode so the embedding part can be tested honestly.",
+          "Made a base pipeline I can keep improving for different organisms.",
+        ],
+        architecture: [
+          "DIAMOND and BioPython for the sequence side.",
+          "ESM C 600M embeddings for an extra reaction-gene score.",
+          "COBRApy and Gurobi for model assembly, gap filling, and checks.",
+        ],
+        tradeoffs:
+          "Embeddings make the pipeline heavier. For me, the point was not to make the cheapest version, but to test whether the extra signal is worth it.",
+      },
       technologies: [
         "Python",
         "ESM C 600M",
@@ -182,18 +216,45 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/gemiz",
       video: "",
     },
     {
       title: "mcpforge",
       category: "Agentic AI",
-      featured: false,
+      featured: true,
       href: "https://github.com/mammadovziya/mcpforge",
+      slug: "mcpforge",
+      caseStudyHref: "/projects/mcpforge",
       dates: "2026",
       active: true,
       description:
-        "Automation tool that generates MCP servers from any repository URL, turning source code into tools accessible to agents with a single click. Produces one-click install files for Claude Desktop and other MCP agents. End-to-end pipeline: repo analysis → tool schema → server code generation → agent configuration. Built at AI Engine Hackathon, Scotland.",
+        "A small tool that takes a repo URL and tries to turn it into an MCP server. It reads the code, suggests useful tools, generates the server, and writes config files for Claude Desktop-style agents.",
+      proof: [
+        "Repo URL to MCP server",
+        "Tool schema generation",
+        "One-click agent config",
+      ],
+      caseStudy: {
+        eyebrow: "Developer tooling for agents",
+        role: "I built the repo analysis and generation workflow prototype.",
+        problem:
+          "MCP is powerful, but making a server still involves a lot of boilerplate. When you just want to test an idea, that setup gets in the way.",
+        solution:
+          "mcpforge takes a repo URL, looks for useful entry points, proposes tool schemas, generates server code, and prepares the agent config.",
+        impact: [
+          "Turned a multi-step MCP setup into a guided flow.",
+          "Made existing repos easier to try as agent tools.",
+          "Generated the config together with the server, so the output is easier to test.",
+        ],
+        architecture: [
+          "Repo ingestion and source analysis.",
+          "Tool schema planning from the code structure.",
+          "Server generation plus agent config output.",
+        ],
+        tradeoffs:
+          "Generated tools still need a human to review them. I see it as a way to start faster, not as something that should deploy unattended.",
+      },
       technologies: ["Python", "TypeScript", "Node.js", "Claude API", "MCP"],
       links: [
         {
@@ -202,7 +263,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/mcpforge",
       video: "",
     },
     {
@@ -213,7 +274,8 @@ export const DATA = {
       dates: "2026",
       active: true,
       description:
-        "GEM-powered fungal fermentation optimisation tool for non-specialist bioprocess engineers, covering A. niger, A. oryzae, N. crassa, and R. microsporus. Applies FBA/FVA to predict growth rates, biomass yields, and organic acid production with shadow prices for media composition. Includes a gene–media component predicting pellet vs. dispersed morphology from pkaC, brlA, flbA regulation. Reduces DoE tables from ~80 to ~15 runs. Built at Edinburgh BioHackathon 2026 (Pacifico Biolabs).",
+        "A fermentation planning tool from Edinburgh BioHackathon 2026. It uses GEMs and FBA/FVA to help compare media choices for four fungi, then turns a large design-of-experiments table into a smaller set of runs.",
+      proof: ["FBA/FVA media design", "4 fungal species", "~80 to ~15 runs"],
       technologies: [
         "Python",
         "COBRApy",
@@ -228,7 +290,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/myco-optima",
       video: "",
     },
     {
@@ -239,7 +301,8 @@ export const DATA = {
       dates: "2025",
       active: true,
       description:
-        "AI post-mortem CLI tool that saves ~90% of incident-documentation time at roughly $0.01 per run. Pip-installable command-line interface that generates professional incident reports from Git commits, with full release pipeline and public documentation.",
+        "A CLI for writing incident reports from Git commits. The goal was simple: take the boring first draft of a post-mortem and make it fast, cheap, and repeatable.",
+      proof: ["~90% faster reports", "~$0.01 per run", "Pip-installable CLI"],
       technologies: ["Python", "Claude 3.5 Sonnet", "CLI", "Git"],
       links: [
         {
@@ -248,7 +311,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/deathlog",
       video: "",
     },
     {
@@ -259,7 +322,8 @@ export const DATA = {
       dates: "2026",
       active: true,
       description:
-        "Virtual supermarket simulation assessing cognitive functions — planning, working memory, inhibition, and cognitive flexibility. Integrated eye tracking and a custom behavioural data-logging pipeline.",
+        "A virtual supermarket experiment for cognitive science. It looks at planning, working memory, inhibition, and flexibility, with eye tracking and behaviour logs built in.",
+      proof: ["Unity simulation", "Eye-tracking pipeline", "Behavioral logging"],
       technologies: ["Unity", "C#", "Eye Tracking", "HCI"],
       links: [
         {
@@ -268,7 +332,7 @@ export const DATA = {
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/cognicart",
       video: "",
     },
     {
@@ -276,10 +340,11 @@ export const DATA = {
       category: "Open Source",
       featured: true,
       href: "https://pypi.org/user/mammadovziya/",
-      dates: "2022 – Present",
+      dates: "2022 - Present",
       active: true,
       description:
-        "Python libraries with 6,000+ total downloads. CBAR Exchange Rates (3,400+ downloads): client for the Central Bank of Azerbaijan API with automatic retries and error handling. Azerbaijani Number-to-Words Converter (2,500+ downloads, 4.8★): converts numbers to Azerbaijani words for financial, legal, and statistical applications. Plus published Azerbaijan-market ML datasets on Hugging Face with cleaning, validation, and structured docs.",
+        "Small Python packages I published while learning by building. Together they have 6,000+ downloads, including a Central Bank of Azerbaijan exchange-rate client, an Azerbaijani number-to-words converter, and a few cleaned datasets on Hugging Face.",
+      proof: ["6,000+ downloads", "PyPI packages", "Hugging Face datasets"],
       technologies: ["Python", "PyPI", "Hugging Face", "NLP", "Open Source"],
       links: [
         {
@@ -298,7 +363,7 @@ export const DATA = {
       dates: "2026",
       location: "Scotland, UK",
       description:
-        "Built two projects during the event: circuit breaker, a real-time oversight layer that risk-scores AI finance agent actions before execution; and mcpforge, an automation tool that generates MCP servers from any repo URL.",
+        "Built two projects here: circuit breaker for checking risky agent actions before they run, and mcpforge for turning a repo into an MCP server more quickly.",
       image: "/ai-engine.svg",
       links: [],
     },
@@ -307,7 +372,7 @@ export const DATA = {
       dates: "2026",
       location: "Edinburgh, UK",
       description:
-        "Pacifico Biolabs track. Built myco-optima, a GEM-powered fungal fermentation optimisation tool covering four filamentous fungi, with FBA/FVA-driven media design and morphology prediction for meat-substitute applications.",
+        "Worked on the Pacifico Biolabs track. I built myco-optima, a GEM-based tool for narrowing down media choices in fungal fermentation experiments.",
       image: "/biohackathon.svg",
       links: [],
     },
@@ -321,7 +386,7 @@ export const DATA = {
       start: "2025",
       end: "2029",
       description:
-        "Awarded nationally to top-performing students. Covers full tuition and living costs at the University of Edinburgh.",
+        "A national scholarship from Azerbaijan that covers my studies and living costs at the University of Edinburgh.",
     },
     {
       title: "Bronze Medal — National Olympiad in Informatics",
@@ -331,7 +396,7 @@ export const DATA = {
       start: "2023",
       end: "2023",
       description:
-        "Ranked 3rd nationwide in Azerbaijan for algorithmic problem-solving.",
+        "Ranked 3rd nationally in Azerbaijan in algorithmic problem-solving.",
     },
   ],
   volunteer: [
@@ -343,7 +408,7 @@ export const DATA = {
       start: "January 2024",
       end: "June 2025",
       description:
-        "Led peer mentoring programmes and supported school technology initiatives for 200+ students.",
+        "Helped run peer mentoring and school technology activities for 200+ students.",
     },
   ],
 } as const;

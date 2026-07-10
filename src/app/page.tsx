@@ -5,8 +5,12 @@ import { ProjectCard } from "@/components/project-card";
 import { ResumeCard } from "@/components/resume-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
+import { cn } from "@/lib/utils";
+import { ArrowRightIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import Markdown from "react-markdown";
 
 import { getPortfolioProjects, GitHubProject } from "@/lib/github";
@@ -14,36 +18,63 @@ import { Icons } from "@/components/icons";
 
 const BLUR_FADE_DELAY = 0.04;
 
+type RenderProject = {
+  title: string;
+  href: string;
+  description: string;
+  dates: string;
+  technologies: readonly string[];
+  image?: string;
+  video?: string;
+  category?: string;
+  featured?: boolean;
+  caseStudyHref?: string;
+  proof?: readonly string[];
+  links?: readonly {
+    icon: ReactNode;
+    type: string;
+    href: string;
+  }[];
+};
+
 export default async function Page() {
   const portfolioUrl = DATA.portfolioUrl;
-  let portfolioProjects: GitHubProject[] | any[] = [];
+  const hasCuratedProjects = DATA.projects.length > 0;
+  let portfolioProjects: GitHubProject[] = [];
 
-  if (portfolioUrl) {
+  if (!hasCuratedProjects && portfolioUrl) {
     portfolioProjects = await getPortfolioProjects(portfolioUrl);
 
     // Add GitHub and Website icons back since they couldn't be serialized effectively
-    portfolioProjects = portfolioProjects.map(project => ({
+    portfolioProjects = portfolioProjects.map((project) => ({
       ...project,
-      links: project.links.map((link: any) => ({
+      links: project.links.map((link) => ({
         ...link,
-        icon: link.type === "Source" ? <Icons.github className="size-3" /> : <Icons.globe className="size-3" />,
-      }))
+        icon:
+          link.type === "Source" ? (
+            <Icons.github className="size-3" />
+          ) : (
+            <Icons.globe className="size-3" />
+          ),
+      })),
     }));
   }
 
   // Prefer curated DATA.projects; fall back to scraped GitHub portfolio list.
-  const projectsToRender =
-    DATA.projects.length > 0 ? DATA.projects : portfolioProjects;
+  const projectsToRender: readonly RenderProject[] =
+    hasCuratedProjects ? DATA.projects : portfolioProjects;
 
   // Group projects by category when curated data is in use; otherwise render flat.
-  type AnyProject = any;
-  const projectGroups: { name: string | null; projects: AnyProject[] }[] =
+  const featuredProjects = projectsToRender
+    .filter((project) => project.featured || project.caseStudyHref)
+    .slice(0, 3);
+  const projectGroups: { name: string | null; projects: RenderProject[] }[] =
     (() => {
-      const src = projectsToRender as AnyProject[];
+      const src = Array.from(projectsToRender);
       const hasCategories =
         src.length > 0 && typeof src[0]?.category === "string";
       if (!hasCategories) return [{ name: null, projects: src }];
-      const buckets = new Map<string, AnyProject[]>();
+      const buckets = new Map<string, RenderProject[]>();
       for (const p of src) {
         const cat: string = p.category || "Other";
         if (!buckets.has(cat)) buckets.set(cat, []);
@@ -56,27 +87,70 @@ export default async function Page() {
     <main className="flex flex-col min-h-[100dvh] space-y-10">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
-          <div className="gap-2 flex justify-between">
-            <div className="flex-col flex flex-1 space-y-1.5">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex min-w-0 flex-1 flex-col space-y-4">
+              <div className="space-y-2">
+                <BlurFadeText
+                  delay={BLUR_FADE_DELAY}
+                  className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
+                  yOffset={8}
+                  text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
+                />
+                <BlurFadeText
+                  className="max-w-[600px] text-base text-muted-foreground sm:text-lg"
+                  delay={BLUR_FADE_DELAY}
+                  text={DATA.description}
+                />
+              </div>
               <BlurFadeText
-                delay={BLUR_FADE_DELAY}
-                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
+                className="max-w-[580px] text-sm leading-relaxed text-muted-foreground"
+                delay={BLUR_FADE_DELAY * 1.5}
+                text="Most of my projects start from a simple question: can this be safer, easier to use, or easier to understand?"
               />
-              <BlurFadeText
-                className="max-w-[600px] md:text-xl"
-                delay={BLUR_FADE_DELAY}
-                text={DATA.description}
-              />
+              <BlurFade delay={BLUR_FADE_DELAY * 2}>
+                <div className="flex flex-wrap gap-2">
+                  <Link
+                    href="#projects"
+                    className={cn(
+                      buttonVariants({ size: "sm" }),
+                      "gap-2"
+                    )}
+                  >
+                    See projects
+                    <ArrowRightIcon aria-hidden="true" className="size-3.5" />
+                  </Link>
+                  <Link
+                    href={`mailto:${DATA.contact.email}`}
+                    className={cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "gap-2"
+                    )}
+                  >
+                    <MailIcon aria-hidden="true" className="size-3.5" />
+                    Email me
+                  </Link>
+                </div>
+              </BlurFade>
             </div>
             <BlurFade delay={BLUR_FADE_DELAY}>
-              <Avatar className="size-28 border">
+              <Avatar className="size-20 shrink-0 border sm:size-28">
                 <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
           </div>
+          <BlurFade delay={BLUR_FADE_DELAY * 2.5}>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {DATA.proofPoints.map((item) => (
+                <div
+                  key={item}
+                  className="rounded-lg border bg-card px-3 py-2 text-xs font-medium text-card-foreground shadow-sm"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+          </BlurFade>
         </div>
       </section>
       <section id="about">
@@ -190,13 +264,12 @@ export default async function Page() {
                   Projects
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  What I&apos;ve been building
+                  Things I have been building
                 </h2>
                 <p className="mx-auto max-w-[720px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Agentic AI oversight layers, LLM-powered developer tools,
-                  genome-scale metabolic modelling, and cognitive-science
-                  experiments — shipped at hackathons (AI Engine Scotland,
-                  Edinburgh BioHackathon) and as open-source Python libraries.
+                  A few projects I built while learning, testing ideas, and
+                  working with teams. Most of them are about agents, developer
+                  tools, or bio-AI.
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-sm text-muted-foreground">
@@ -204,7 +277,7 @@ export default async function Page() {
                   <span className="font-semibold text-foreground">
                     {DATA.projects.length}
                   </span>{" "}
-                  shipped projects
+                  projects here
                 </div>
                 <div aria-hidden className="h-4 w-px bg-border" />
                 <div>
@@ -219,6 +292,53 @@ export default async function Page() {
               </div>
             </div>
           </BlurFade>
+          {featuredProjects.length > 0 && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {featuredProjects.map((project, id) => (
+                <BlurFade
+                  key={project.title}
+                  delay={BLUR_FADE_DELAY * 11.25 + id * 0.05}
+                >
+                  <Link
+                    href={project.caseStudyHref ?? project.href}
+                    className="group flex h-full min-h-[220px] flex-col rounded-lg border bg-card p-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      {project.category ?? "Project"}
+                    </div>
+                    <h3 className="mt-2 text-base font-semibold leading-tight">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-muted-foreground">
+                      {project.description}
+                    </p>
+                    {project.proof && project.proof.length > 0 && (
+                      <div className="mt-auto flex flex-wrap gap-1 pt-4">
+                        {project.proof.slice(0, 2).map((item) => (
+                          <Badge
+                            key={item}
+                            variant="secondary"
+                            className="px-1.5 py-0 text-[10px] leading-5"
+                          >
+                            {item}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-foreground">
+                      {project.caseStudyHref
+                        ? "Read how I built it"
+                        : "Open project"}
+                      <ArrowRightIcon
+                        aria-hidden="true"
+                        className="size-3 transition-transform group-hover:translate-x-0.5"
+                      />
+                    </span>
+                  </Link>
+                </BlurFade>
+              ))}
+            </div>
+          )}
           <div className="space-y-10 max-w-[800px] mx-auto">
             {projectGroups.map((group, gi) => (
               <div key={group.name ?? "all"} className="space-y-4">
@@ -244,13 +364,15 @@ export default async function Page() {
                       delay={BLUR_FADE_DELAY * (12 + gi * 0.2) + id * 0.05}
                     >
                       <ProjectCard
-                        href={project.href}
+                        href={project.caseStudyHref ?? project.href}
                         title={project.title}
                         description={project.description}
                         dates={project.dates}
                         tags={project.technologies}
+                        proof={project.proof}
                         image={project.image}
                         video={project.video}
+                        priority={gi === 0 && id === 0}
                         links={project.links}
                       />
                     </BlurFade>
@@ -270,11 +392,11 @@ export default async function Page() {
                   Hackathons
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  I like building things
+                  Building under time pressure
                 </h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Fast constraints, real teams, shipped products. Recent
-                  hackathons where I&apos;ve built things from scratch.
+                  Hackathons are a good way to find out whether an idea works
+                  outside your notes. These are the recent ones.
                 </p>
               </div>
             </div>
@@ -331,24 +453,25 @@ export default async function Page() {
                 Contact
               </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Get in Touch
+                Say hi
               </h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Want to chat? Reach me on{" "}
+                If you want to talk about a project, a paper, or just something
+                interesting, message me on{" "}
                 <Link
                   href={DATA.contact.social.Signal.url}
                   className="text-blue-500 hover:underline"
                 >
                   Signal
                 </Link>
-                {" "}or drop me an{" "}
+                {" "}or send me an{" "}
                 <Link
                   href={`mailto:${DATA.contact.email}`}
                   className="text-blue-500 hover:underline"
                 >
                   email
                 </Link>
-                {" "}— I&apos;ll respond whenever I can.
+                {" "}and I&apos;ll reply when I can.
               </p>
             </div>
           </BlurFade>
