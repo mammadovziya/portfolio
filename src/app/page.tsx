@@ -139,18 +139,6 @@ export default async function Page() {
               </Avatar>
             </BlurFade>
           </div>
-          <BlurFade delay={BLUR_FADE_DELAY * 2.5}>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {DATA.proofPoints.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-lg border bg-card px-3 py-2 text-xs font-medium text-card-foreground shadow-sm"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </BlurFade>
         </div>
       </section>
       <section id="about">
