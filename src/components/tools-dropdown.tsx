@@ -17,6 +17,11 @@ const tools = [
     href: "https://go.ziyamammadov.me/",
     description: "go.ziyamammadov.me",
   },
+  {
+    label: "RSS",
+    href: "https://rss.ziyamammadov.me/",
+    description: "rss.ziyamammadov.me",
+  },
 ] as const;
 
 export function ToolsDropdown() {
