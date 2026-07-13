@@ -11,7 +11,7 @@ export const DATA = {
   description:
     "I study AI and Computer Science at Edinburgh. I build small, practical tools around agents, developer workflows, and bio-AI.",
   summary:
-    "I am an Artificial Intelligence and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I like building things that make a technical idea easier to use: an agent safety layer, a tool that turns repos into MCP servers, bio-AI pipelines, and small Python libraries people actually install. I also write about what I learn, because explaining a topic usually shows me what I still do not understand.",
+    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I’m especially interested in coding, AI for biology, HCI, and cognitive AI. I also write about what I learn, because explaining something is often the best way to find out whether I truly understand it.",
   avatarUrl: "https://avatars.githubusercontent.com/u/151031540?v=4",
   skills: [
     "Python",

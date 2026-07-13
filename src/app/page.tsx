@@ -102,11 +102,6 @@ export default async function Page() {
                   text={DATA.description}
                 />
               </div>
-              <BlurFadeText
-                className="max-w-[580px] text-sm leading-relaxed text-muted-foreground"
-                delay={BLUR_FADE_DELAY * 1.5}
-                text="Most of my projects start from a simple question: can this be safer, easier to use, or easier to understand?"
-              />
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
                 <div className="flex flex-wrap gap-2">
                   <Link
