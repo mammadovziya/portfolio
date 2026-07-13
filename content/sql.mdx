@@ -1,60 +1,60 @@
 ---
-title: "SQL proqramlaşdırma dili"
+title: "The SQL Programming Language"
 publishedAt: "2025-07-14"
-summary: "SQL — məlumat bazaları ilə işləmək üçün istifadə olunan strukturlaşdırılmış sorğu dilidir. Bu yazıda SQL-in əsas anlayışları, praktiki tətbiqi və kod nümunələri izah olunur."
+summary: "SQL is a structured query language used to work with databases. This post explains the basic ideas behind SQL, where it is used, and how it looks in real code."
 image: "/sql-table.png"
 ---
 
-**SQL** (*Structured Query Language*) — əlaqəli məlumat bazaları ilə qarşılıqlı əlaqə qurmaq üçün istifadə olunan **standart proqramlaşdırma dilidir**. 1970-ci illərdə IBM tərəfindən yaradılmış və bu günə qədər bir çox **verilənlər bazası idarəetmə sistemində** (DBMS) tətbiq olunur:  
-**MySQL**, **PostgreSQL**, **SQLite**, **Oracle**, **SQL Server** və digərləri. </br>
-Yazıya əlavə olaraq 60 saniyəlik videoya da bax: [SQL videoya keçid](youtube-link)
+**SQL** (*Structured Query Language*) is the standard language used to work with relational databases. It was created by IBM in the 1970s and is still used today in many database management systems, including **MySQL**, **PostgreSQL**, **SQLite**, **Oracle**, **SQL Server**, and others.
 
+As an extra resource, you can also watch my short 60-second video here: [SQL video](youtube-link)
 
-## SQL nə üçün istifadə olunur?
+## What Is SQL Used For?
 
-SQL vasitəsilə verilənlər bazasında:
+With SQL, you can work with data in a database in several important ways:
 
-- Yeni məlumatlar **əlavə etmək** (INSERT)  
-- Mövcud məlumatları **oxumaq və axtarmaq** (SELECT)  
-- Məlumatları **yeniləmək** (UPDATE)  
-- Artıq lazım olmayan məlumatları **silmək** (DELETE)  
-- Cədvəllər yaratmaq və əlaqələr qurmaq (CREATE, ALTER)  
-- İstifadəçi icazələrini idarə etmək (GRANT, REVOKE)
+- **Add** new data with `INSERT`
+- **Read and search** existing data with `SELECT`
+- **Update** existing data with `UPDATE`
+- **Delete** data that is no longer needed with `DELETE`
+- Create and modify tables with `CREATE` and `ALTER`
+- Manage user permissions with `GRANT` and `REVOKE`
 
-mümkündür.
+These operations are often grouped under the term **CRUD**:
 
-Bu əməliyyatlar adətən **CRUD** olaraq qısaldılır:  
-**Create**, **Read**, **Update**, **Delete**.
+**Create**, **Read**, **Update**, and **Delete**.
 
+## Core Concepts
 
-## Əsas anlayışlar
+### 1. **Table**
 
-### 1. **Table (Cədvəl)**  
-Məlumatlar satırlar (rows) və sütunlar (columns) şəklində saxlanılır. Hər cədvəl müəyyən bir məlumat növünü təmsil edir (məsələn, `Users` cədvəli istifadəçi məlumatlarını saxlayır).
+Data is stored in rows and columns. Each table represents a specific type of information. For example, a `Users` table can store user information.
 
-### 2. **Primary Key**  
-Cədvəldəki hər bir sətrin **unikal identifikatoru**. Bu, duplikatların qarşısını alır.
+### 2. **Primary Key**
 
-### 3. **Foreign Key**  
-İki cədvəl arasında əlaqə yaradan açardır. Beləliklə, normalizasiya və məlumatların təkrar olunmasının qarşısı alınır.
+A primary key is the unique identifier for each row in a table. It helps prevent duplicates and makes it easier to reference specific records.
 
-### 4. **Query**  
-SQL-də verilən **sorğu əmridir**. Məlumat əldə etmək və ya dəyişmək üçün istifadə olunur.
+### 3. **Foreign Key**
 
+A foreign key creates a relationship between two tables. It helps keep data organized and prevents unnecessary repetition.
 
-## Real kod nümunələri
+### 4. **Query**
 
-Aşağıdakı nümunə bir `Users` və `Posts` cədvəli yaradaraq onların arasında əlaqə qurur.
+A query is an instruction written in SQL. You use it to retrieve, insert, update, or delete data.
+
+## Real Code Examples
+
+The example below creates two tables, `Users` and `Posts`, and connects them with a relationship.
 
 ```sql
--- Users cədvəlinin yaradılması
+-- Create the Users table
 CREATE TABLE Users (
   id INT PRIMARY KEY,
   name VARCHAR(100),
   email VARCHAR(100) UNIQUE
 );
 
--- Posts cədvəlinin yaradılması və Users ilə əlaqələndirilməsi
+-- Create the Posts table and connect it to Users
 CREATE TABLE Posts (
   id INT PRIMARY KEY,
   user_id INT,
@@ -62,45 +62,45 @@ CREATE TABLE Posts (
   content TEXT,
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
-````
+```
 
-### Məlumat əlavə etmək
+### Adding Data
 
 ```sql
 INSERT INTO Users (id, name, email)
-VALUES (1, 'Ziya Məmmədov', 'ziya@example.com');
+VALUES (1, 'Ziya Mammadov', 'ziya@example.com');
 ```
 
-### 🔍 Məlumatı axtarmaq (SELECT)
+### Searching for Data With SELECT
 
 ```sql
--- Bütün istifadəçiləri siyahıla
+-- List all users
 SELECT * FROM Users;
 
--- Ziya adlı istifadəçini tap
-SELECT * FROM Users WHERE name = 'Ziya Məmmədov';
+-- Find the user named Ziya Mammadov
+SELECT * FROM Users WHERE name = 'Ziya Mammadov';
 ```
 
-### Cədvəlləri birləşdirmək (JOIN)
+### Joining Tables
 
 ```sql
--- İstifadəçilərin postlarını göstər
+-- Show users and their posts
 SELECT Users.name, Posts.title
 FROM Users
 JOIN Posts ON Users.id = Posts.user_id;
 ```
 
+## Advantages of SQL
 
-## SQL-in üstünlükləri
+- **Declarative:** You describe what you want, and the database system decides how to get it.
+- **Standardized:** Most relational databases use similar SQL syntax.
+- **Performance-friendly:** Queries can be optimized with indexes and database engines.
+- **Reliable:** SQL databases support data integrity and safety through principles such as ACID.
 
-**Deklarativdir** – “Nə istədiyini” yazırsan, “Necə alınacağını” sistem özü qərar verir
-**Standartlaşdırılıb** – Əksər verilənlər bazalarında oxşar sintaksis
-**Performans və optimizasiya** – Sorgular indekslərlə sürətləndirilə bilir
-**Veri bütövlüyü və təhlükəsizlik** – ASID prinsipləri ilə işləyir
+## Conclusion
 
+SQL is not just another programming language. It is one of the most important skills for anyone who works with data.
 
-## Nəticə
+Whether you are a developer, analyst, or data engineer, SQL is the tool that lets you "talk" to data.
 
-SQL — yalnızca bir proqramlaşdırma dili deyil, **məlumatla işləyən hər bir mütəxəssisin bilməli olduğu əsas bacarıqdır**. İstər proqramçı, istər analitik, istərsə də data engineer olasan — SQL sənin “məlumatla danışma” vasitəndir.
-
-Əgər bu yazı sənin üçün faydalı oldusa, paylaş və fikirlərini bölüş!
+If this post was useful for you, share it and let me know what you think.

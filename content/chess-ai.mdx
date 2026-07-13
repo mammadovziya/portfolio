@@ -1,49 +1,59 @@
 ---
-title: "Süni İntellektin Təkamülü Kontekstində Şahmatın İnkişafı"
+title: "The Evolution of Chess in the Age of Artificial Intelligence"
 publishedAt: "2025-05-23"
-summary: "Süni intellekt və şahmatın qarşılıqlı təsiri 70 il ərzində hər iki sahənin inkişafına böyük təkan vermişdir. 1997-ci ildə IBM-in Deep Blue kompüteri dünya çempionu Kasparovu məğlub edərək tarixi dönüş nöqtəsi oldu. 2017-ci ildə yaradılmış AlphaZero proqramı öz-özünə öyrənmə metodu ilə şahmat sahəsində yeni era başlatdı və hazırda Stockfish kimi Sİ proqramları şahmat təhlili və məşqlər üçün geniş istifadə olunur."
+summary: "The relationship between artificial intelligence and chess has pushed both fields forward for more than 70 years. IBM's Deep Blue defeated world champion Garry Kasparov in 1997 and became a historic turning point. In 2017, AlphaZero opened a new era by learning chess through self-play, and today engines like Stockfish are used widely for analysis, training, and preparation."
 ---
 
-Uşaq yaşlarımdan şahmata böyük marağım olub və bu maraq illər keçsə də dəyişməyib — bu gün də fürsət düşdükcə şahmat oynamaqdan zövq alıram. Son illərdə süni intellekt sahəsində araşdırmalar apararkən şahmatın bu sahəyə verdiyi töhfələri daha dərindən anlamağa başladım. Bu iki dünyanın — oyun və texnologiyanın — necə bir-birini formalaşdırdığını kəşf etdikcə, bu mövzunu paylaşmaq istəyim yarandı. 
-*Odur ki, gəlin başlayaq.*
+I have been interested in chess since I was a child, and that interest has stayed with me over the years. Even today, whenever I get the chance, I still enjoy playing it.
 
-### **Giriş**
+In recent years, while learning more about artificial intelligence, I also started to understand how much chess has contributed to the development of AI. The more I looked into the connection between these two worlds - the game and the technology - the more I wanted to write about it.
 
-Şahmat, dünyanın ən qədim və intellektual oyunlarından biri olmaqla yanaşı, süni intellektin (Sİ) inkişafında mühüm rol oynamış nadir sahələrdən biridir. Dəqiq qaydaları və mürəkkəb strategiyası  şahmatı kompüter elmləri üçün ideal tədqiqat modelinə çevirmişdir. Şahmat və Sİ arasındakı qarşılıqlı təsir iki istiqamətdə inkişaf edib: şahmat Sİ üçün çətinlik yaradıb, Sİ isə şahmatın analizi və oynanma tərzini tamamilə dəyişib.
+*So, let's begin.*
 
+### **Introduction**
 
-### **Kompüterlə Oynanan Şahmatın İlk Dövrləri**
+Chess is one of the oldest and most intellectual games in the world. It is also one of the rare fields that played a major role in the development of artificial intelligence.
 
-XX əsrin ortalarında alimlər kompüterlərin şahmat oynaya bilməsi ideyasını ortaya atdılar. İlk şahmat proqramları sadə qaydalara əsaslanaraq mümkün gedişlərin bir neçə addım sonrasını hesablayıb və ən yaxşı mövqeyə gətirib çıxaran gedişi seçirdilər. Bu, **alfa-beta budama** (alpha-beta pruning) axtarış alqoritminin yaranmasına səbəb oldu.
+Because chess has clear rules and deep strategic complexity, it became an ideal research model for computer science. The relationship between chess and AI developed in both directions: chess gave AI a difficult problem to solve, and AI completely changed the way chess is analyzed, studied, and played.
 
-Bu cür **axtarış əsaslı yanaşmalar**, əsasən oyunun son mərhələlərində (gedişlərin sayı azaldığı zaman) uğurlu olurdu. Lakin oyunun başlanğıcında mümkün variantların sayı çox olduğuna görə (təxminən 10^120) bu alqoritm effektli olmurdu.
+### **The Early Days of Computer Chess**
 
+In the middle of the 20th century, researchers began asking whether computers could play chess. The first chess programs were based on simple rules. They calculated possible moves a few steps ahead and tried to choose the move that led to the best position.
 
-### **Nümunəyə Əsaslanan Məntiq və Təcrübəyə Dayaqlanma**
+This kind of thinking led to the development of search algorithms such as **alpha-beta pruning**.
 
-Daha sonra proqramçılar **nümunəyə əsaslanan məntiq** (case-based reasoning) metodunu tətbiq etməyə başladılar. Bu yanaşma proqramın əvvəlki insan oyunlarından ibarət geniş bir məlumat bazasında hazırki mövqeyə oxşar halları taparaq ən yaxşı qərarı verməyə çalışdı. Bu, xüsusilə oyunun ilkin mərhələlərində axtarışı effektiv şəkildə daraltmağa və daha ağıllı qərarlar verməyə imkan yaratdı.
+Search-based approaches worked especially well in endgames, where the number of possible moves is smaller. But in the opening and middlegame, the number of possible variations is enormous. Chess is often estimated to have around `10^120` possible game paths, so brute-force search alone was not enough.
 
+### **Case-Based Reasoning and Experience**
 
-### **Deep Blue və Kasparov**
+Later, programmers started using **case-based reasoning**. The idea was to give a program access to a large database of human games, then let it find positions similar to the current one and choose a strong move based on those examples.
 
-1997-ci ildə IBM-in hazırladığı **Deep Blue** superkompüteri Garri Kasparovu (həmin dövrün dünya çempionu) məğlub edərək Sİ tarixində mühüm dönüş nöqtəsi oldu. Deep Blue saniyədə 200 milyon variant hesablayaraq oyun strategiyasını qururdu. Bu, insanı yalnız təqlid etməyən, həm də texnoloji gücün nələr edə biləcəyini göstərən ilk hadisə oldu.
+This was especially useful in the opening phase of the game. Instead of searching blindly through too many possibilities, the program could narrow the search and make decisions that looked more intelligent.
 
+### **Deep Blue and Kasparov**
 
-### **AlphaZero və Öz-özünə Öyrənmə**
+In 1997, IBM's **Deep Blue** supercomputer defeated Garry Kasparov, who was the world chess champion at the time. This became one of the most important turning points in AI history.
 
-2017-ci ildə DeepMind tərəfindən yaradılmış **AlphaZero** adlı proqram şahmat proqramçılığında yeni bir mərhələni başlatdı. AlphaZero nə əvvəlcədən yazılmış strategiyalardan, nə də insan oyunlarından istifadə edirdi. O, sadəcə öz-özünə milyonlarla oyun oynayaraq və səhvlərindən öyrənərək oyunu mənimsəmişdi – məhz bu metod **möhkəmləndirici öyrənmə** (reinforcement learning) adlanır.
+Deep Blue could calculate around 200 million positions per second. It did not "think" like a human, but it showed what raw computational power, combined with strong evaluation methods, could achieve.
 
-AlphaZero-nun əsas yeniliyi onun **neyron şəbəkələrdən** istifadə edərək insan ağlına bənzər, lakin daha əlverişli strategiyalar inkişaf etdirməsi idi. AlphaZero-nun oynadığı oyunlarda qeyri-ənənəvi, təəcübləndirici dərəcədə yaradıcı gedişlər şahmat cəmiyyətini heyrətləndirmiş və insanlara yeni strategiyalar öyrətmişdir.
+That match was not only about chess. It was also a symbol of how far computers had come.
 
+### **AlphaZero and Self-Learning**
 
-### **Süni İntellektin Hazırkı Rolu və Gələcəyi**
+In 2017, DeepMind introduced **AlphaZero**, and it started a new chapter in chess programming.
 
-Bu gün dünyada şahmatla məşğul olan hər kəs üçün süni intellekt əsaslı proqramlar (məsələn, **Stockfish**, **Leela Chess Zero** və s.) var. Onlar oyun analizi, məşq, oyunlara hazırlıq üçün geniş şəkildə istifadə olunur.
+AlphaZero did not rely on hand-written opening theory or databases of human games. Instead, it learned by playing millions of games against itself and improving through its own mistakes. This method is called **reinforcement learning**.
 
-Gələcəkdə Sİ texnologiyalarının daha da inkişaf edərsə bu proqramlar oyunçularla daha interaktiv ünsiyyət qura bilər. Məsələn, fərdi öyrənmə yolları yaratmaq kimi imkanlar gündəmə gələ bilər. Həmçinin, Sİ yeni şahmat variantlarının və ya insan-Sİ komandalarının iştirak etdiyi hibrid turnirlərin yaranmasına da yol aça bilər.
+The most interesting part of AlphaZero was its use of **neural networks**. It developed strategies that sometimes looked strange, creative, and even beautiful to human players. Its games surprised the chess world and taught people new ways to think about positions.
 
+### **The Current Role and Future of AI in Chess**
 
-### **Nəticə**
+Today, almost everyone who studies chess uses AI-based tools. Engines like **Stockfish**, **Leela Chess Zero**, and others are used for analysis, training, opening preparation, and post-game review.
 
-Şahmatla süni intellekt arasında qarşılıqlı təsir ötən 70 il ərzində həm texnologiyanın, həm də oyunun inkişafına ciddi təkan vermişdir. Ənənəvi metodlarından başlayaraq müasir öyrənmə alqoritmlərinə qədər, Sİ-nin şahmatdakı rolu təkcə texniki deyil, həm də fəlsəfi baxımdan əvəzsizdir. 
+As AI continues to improve, these tools may become even more interactive. For example, they could create personalized learning paths for players instead of only showing the best move. AI could also help create new chess variants or hybrid tournaments where humans and AI systems work together.
 
+### **Conclusion**
+
+The relationship between chess and artificial intelligence has pushed both technology and the game forward for more than 70 years. From classical search methods to modern learning algorithms, AI's role in chess is not only technical. It is also philosophical.
+
+Chess asks a simple question: how should we make the best decision from a huge number of possibilities? AI has spent decades trying to answer that question, and in the process, it has changed both computer science and chess itself.
