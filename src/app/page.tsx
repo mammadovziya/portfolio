@@ -10,6 +10,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Markdown from "react-markdown";
 
@@ -17,6 +18,33 @@ import { getPortfolioProjects, GitHubProject } from "@/lib/github";
 import { Icons } from "@/components/icons";
 
 const BLUR_FADE_DELAY = 0.04;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: DATA.url,
+  },
+};
+
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${DATA.url}/#profile`,
+  url: DATA.url,
+  mainEntity: {
+    "@type": "Person",
+    "@id": `${DATA.url}/#person`,
+    name: DATA.name,
+    alternateName: ["Ziya Məmmədov", "Ziya Memmedov"],
+    url: DATA.url,
+    image: `${DATA.url}/me.jpg`,
+    description: DATA.description,
+    sameAs: [
+      DATA.contact.social.GitHub.url,
+      DATA.contact.social.LinkedIn.url,
+      DATA.contact.social.Youtube.url,
+    ],
+  },
+};
 
 type RenderProject = {
   title: string;
@@ -85,6 +113,12 @@ export default async function Page() {
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(profilePageJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="flex items-start justify-between gap-4">

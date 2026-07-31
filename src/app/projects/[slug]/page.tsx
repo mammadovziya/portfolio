@@ -57,6 +57,9 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: project.title,
     description: project.description,
+    alternates: {
+      canonical: `${DATA.url}/projects/${project.slug}`,
+    },
     openGraph: {
       title: `${project.title} | ${DATA.name}`,
       description: project.description,
