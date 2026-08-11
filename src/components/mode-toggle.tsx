@@ -16,7 +16,7 @@ export const ModeToggle = React.forwardRef<
   return (
     <Button
       ref={ref}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      aria-label="Toggle color theme"
       variant="ghost"
       type="button"
       size="icon"

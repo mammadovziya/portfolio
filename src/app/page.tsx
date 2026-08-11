@@ -27,23 +27,56 @@ export const metadata: Metadata = {
 
 const profilePageJsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": `${DATA.url}/#profile`,
-  url: DATA.url,
-  mainEntity: {
-    "@type": "Person",
-    "@id": `${DATA.url}/#person`,
-    name: DATA.name,
-    alternateName: ["Ziya Məmmədov", "Ziya Memmedov"],
-    url: DATA.url,
-    image: `${DATA.url}/me.jpg`,
-    description: DATA.description,
-    sameAs: [
-      DATA.contact.social.GitHub.url,
-      DATA.contact.social.LinkedIn.url,
-      DATA.contact.social.Youtube.url,
-    ],
-  },
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${DATA.url}/#website`,
+      url: `${DATA.url}/`,
+      name: DATA.name,
+      alternateName: "ziyamammadov.me",
+      inLanguage: "en",
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${DATA.url}/#profile`,
+      url: `${DATA.url}/`,
+      name: DATA.seoTitle,
+      description: DATA.seoDescription,
+      isPartOf: {
+        "@id": `${DATA.url}/#website`,
+      },
+      mainEntity: {
+        "@type": "Person",
+        "@id": `${DATA.url}/#person`,
+        name: DATA.name,
+        alternateName: ["Ziya Məmmədov", "Ziya Memmedov"],
+        url: `${DATA.url}/`,
+        image: `${DATA.url}/me.jpg`,
+        description: DATA.seoDescription,
+        jobTitle: ["AI Engineer Intern", "Research Collaborator"],
+        worksFor: {
+          "@type": "Organization",
+          name: "ABB Invest",
+          url: "https://abbinvest.az/",
+        },
+        affiliation: {
+          "@type": "Organization",
+          name: "Houston Lab",
+          url: "https://houstonlab.bio.ed.ac.uk/",
+          parentOrganization: {
+            "@type": "CollegeOrUniversity",
+            name: "University of Edinburgh",
+            url: "https://www.ed.ac.uk/",
+          },
+        },
+        sameAs: [
+          DATA.contact.social.GitHub.url,
+          DATA.contact.social.LinkedIn.url,
+          DATA.contact.social.Youtube.url,
+        ],
+      },
+    },
+  ],
 };
 
 type RenderProject = {
@@ -114,6 +147,7 @@ export default async function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
       <script
+        id="profile-page-json-ld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(profilePageJsonLd).replace(/</g, "\\u003c"),
@@ -195,10 +229,35 @@ export default async function Page() {
                 altText={work.company}
                 title={work.company}
                 subtitle={work.title}
+                location={work.location}
                 href={work.href}
                 badges={work.badges}
                 period={`${work.start} - ${work.end ?? "Present"}`}
                 description={work.description}
+              />
+            </BlurFade>
+          ))}
+        </div>
+      </section>
+      <section id="research">
+        <div className="flex min-h-0 flex-col gap-y-3">
+          <BlurFade delay={BLUR_FADE_DELAY * 6.75}>
+            <h2 className="text-xl font-bold">Research Experience</h2>
+          </BlurFade>
+          {DATA.research.map((research, id) => (
+            <BlurFade
+              key={research.organization + research.title}
+              delay={BLUR_FADE_DELAY * 7 + id * 0.05}
+            >
+              <ResumeCard
+                href={research.href}
+                logoUrl={research.logoUrl}
+                altText={research.organization}
+                title={research.organization}
+                subtitle={`${research.title} · ${research.school}`}
+                location={research.location}
+                period={`${research.start} - ${research.end}`}
+                details={research.details}
               />
             </BlurFade>
           ))}

@@ -17,16 +17,19 @@ const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(DATA.url),
+  applicationName: DATA.name,
   title: {
-    default: DATA.name,
+    default: DATA.seoTitle,
     template: `%s | ${DATA.name}`,
   },
-  description: DATA.description,
+  description: DATA.seoDescription,
+  authors: [{ name: DATA.name, url: DATA.url }],
+  creator: DATA.name,
   openGraph: {
-    title: `${DATA.name}`,
-    description: DATA.description,
+    title: DATA.seoTitle,
+    description: DATA.seoDescription,
     url: DATA.url,
-    siteName: `${DATA.name}`,
+    siteName: DATA.name,
     locale: "en_US",
     type: "website",
   },
@@ -42,7 +45,8 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${DATA.name}`,
+    title: DATA.seoTitle,
+    description: DATA.seoDescription,
     card: "summary_large_image",
   },
   verification: googleSiteVerification

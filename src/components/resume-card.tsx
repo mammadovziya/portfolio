@@ -14,24 +14,28 @@ interface ResumeCardProps {
   altText: string;
   title: string;
   subtitle?: string;
+  location?: string;
   href?: string;
   badges?: readonly string[];
   period: string;
   description?: string;
+  details?: readonly string[];
 }
 export const ResumeCard = ({
   logoUrl,
   altText,
   title,
   subtitle,
+  location,
   href,
   badges,
   period,
   description,
+  details,
 }: ResumeCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const descriptionId = React.useId();
-  const hasDescription = Boolean(description);
+  const hasExpandedContent = Boolean(description || details?.length);
 
   const titleContent = (
     <>
@@ -49,7 +53,7 @@ export const ResumeCard = ({
           ))}
         </span>
       )}
-      {hasDescription && (
+      {hasExpandedContent && (
         <ChevronRightIcon
           aria-hidden="true"
           className={cn(
@@ -62,6 +66,15 @@ export const ResumeCard = ({
   );
   const titleClassName =
     "group inline-flex min-w-0 max-w-full items-center gap-x-1 font-semibold leading-none text-xs sm:text-sm";
+  const secondaryContent =
+    subtitle || location ? (
+      <div className="mt-1 space-y-0.5 font-sans text-xs">
+        {subtitle && <div>{subtitle}</div>}
+        {location && (
+          <div className="text-muted-foreground">{location}</div>
+        )}
+      </div>
+    ) : null;
 
   return (
     <Card className="flex">
@@ -78,7 +91,7 @@ export const ResumeCard = ({
       <div className="ml-3 flex min-w-0 flex-grow flex-col sm:ml-4">
         <CardHeader>
           <div className="flex flex-col gap-1 text-base sm:flex-row sm:items-start sm:justify-between sm:gap-x-3">
-            {hasDescription ? (
+            {hasExpandedContent ? (
               <div className="min-w-0 flex-1">
                 <h3>
                   <button
@@ -94,9 +107,7 @@ export const ResumeCard = ({
                     {titleContent}
                   </button>
                 </h3>
-                {subtitle && (
-                  <div className="mt-1 font-sans text-xs">{subtitle}</div>
-                )}
+                {secondaryContent}
               </div>
             ) : href ? (
               <div className="min-w-0 flex-1">
@@ -111,23 +122,19 @@ export const ResumeCard = ({
                     {titleContent}
                   </Link>
                 </h3>
-                {subtitle && (
-                  <div className="mt-1 font-sans text-xs">{subtitle}</div>
-                )}
+                {secondaryContent}
               </div>
             ) : (
               <div className="min-w-0 flex-1">
                 <h3 className={titleClassName}>{titleContent}</h3>
-                {subtitle && (
-                  <div className="mt-1 font-sans text-xs">{subtitle}</div>
-                )}
+                {secondaryContent}
               </div>
             )}
             <div className="flex shrink-0 items-center gap-2 sm:justify-end">
               <div className="text-left text-xs tabular-nums text-muted-foreground sm:text-right sm:text-sm">
                 {period}
               </div>
-              {hasDescription && href && (
+              {hasExpandedContent && href && (
                 <Link
                   href={href}
                   aria-label={`Open ${title}`}
@@ -139,7 +146,7 @@ export const ResumeCard = ({
             </div>
           </div>
         </CardHeader>
-        {description && (
+        {hasExpandedContent && (
           <motion.div
             id={descriptionId}
             initial={{ opacity: 0, height: 0 }}
@@ -152,9 +159,18 @@ export const ResumeCard = ({
               duration: 0.7,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="mt-2 overflow-hidden text-xs sm:text-sm"
+            className="mt-2 overflow-hidden text-xs text-muted-foreground sm:text-sm"
           >
-            {description}
+            <div className="space-y-2">
+              {description && <p>{description}</p>}
+              {details && details.length > 0 && (
+                <ul className="list-disc space-y-1.5 pl-4">
+                  {details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </motion.div>
         )}
       </div>

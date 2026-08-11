@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 23" role="img" aria-labelledby="title">
+  <title id="title">State scholarship</title>
+  <g fill="#4b4545">
+    <path d="M3.1 0v1.4h1.4v5.7a2.1 2.1 0 0 0-1.4 2v2.1h4.2V9.1a2.1 2.1 0 0 0-1.4-2V1.4h1.4v3.9l6.3 3.1 6.3-3.1V1.4h2.8V0H3.1Z"/>
+    <path d="M0 14.2h3v8H0z"/>
+    <path d="m15.8 17.9-3.3 2.1H4.9v-1.4h6.3v-2.8H6.8c-.4 0-.5-.3-.8-.5A4.8 4.8 0 0 0 2.8 14v9.2h12.1l7.4-5.6a2.8 2.8 0 0 0-3.8-.7l-2.7 1Z"/>
+  </g>
+</svg>

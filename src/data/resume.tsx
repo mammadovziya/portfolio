@@ -9,9 +9,12 @@ export const DATA = {
   location: "Edinburgh, UK",
   locationLink: "https://www.google.com/maps/place/edinburgh",
   description:
-    "I study AI and Computer Science at Edinburgh. I build small, practical tools around agents, developer workflows, and bio-AI.",
+    "I study AI and Computer Science at Edinburgh and build AI systems for finance, computational biology, and developer workflows.",
+  seoTitle: "Ziya Mammadov — AI & Computer Science Student",
+  seoDescription:
+    "Portfolio of Ziya Mammadov, an AI and Computer Science student at the University of Edinburgh working across AI engineering and computational biology.",
   summary:
-    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I’m especially interested in coding, AI for biology, HCI, and cognitive AI. I also write about what I learn, because explaining something is often the best way to find out whether I truly understand it.",
+    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I currently work as an AI Engineer Intern at ABB Invest and collaborate with Houston Lab on computational drug-discovery tooling. I’m especially interested in AI for biology, developer systems, HCI, and cognitive AI.",
   avatarUrl: "https://avatars.githubusercontent.com/u/151031540?v=4",
   skills: [
     "Python",
@@ -87,6 +90,18 @@ export const DATA = {
 
   work: [
     {
+      company: "ABB Invest",
+      href: "https://abbinvest.az/",
+      badges: [],
+      location: "Baku, Azerbaijan",
+      title: "AI Engineer Intern",
+      logoUrl: "/abb-invest.svg",
+      start: "2026",
+      end: "Present",
+      description:
+        "Building a local-first Azerbaijani RAG API and embeddable support widget over public investment information, with cited answers, refusal and handoff controls, evaluation, and deployment safeguards.",
+    },
+    {
       company: "MPAY",
       href: "https://mpay.az",
       badges: [],
@@ -97,6 +112,23 @@ export const DATA = {
       end: "September 2024",
       description:
         "Worked on production features and REST APIs in C# ASP.NET MVC. I also wrote integration tests, helped with CI checks, documented issues, and got used to the everyday rhythm of code reviews and GitLab workflows.",
+    },
+  ],
+  research: [
+    {
+      organization: "Houston Lab",
+      school: "School of Biological Sciences, University of Edinburgh",
+      href: "https://houstonlab.bio.ed.ac.uk/",
+      location: "Edinburgh, UK",
+      title: "Research Collaborator",
+      logoUrl: "/edinburghuniversity.svg",
+      start: "July 2026",
+      end: "Present",
+      details: [
+        "Building the web platform and distributed execution layer that turns a command-line ligand-preparation and virtual-screening pipeline into a public research tool, as an open alternative to parts of the proprietary LigPrep suite.",
+        "Designing the multi-server worker architecture: job distribution across compute nodes, database-backed status tracking, shared storage, retry logic, deployment, and monitoring.",
+        "Working on lab compute infrastructure over VPN/SSH; listed as a lab collaborator and designated co-author on the planned publication of the toolkit.",
+      ],
     },
   ],
   education: [
@@ -116,7 +148,7 @@ export const DATA = {
       title: "circuit breaker",
       category: "Agentic AI",
       featured: true,
-      href: "https://github.com/mammadovziya/circuit-breaker",
+      href: "",
       slug: "circuit-breaker",
       caseStudyHref: "/projects/circuit-breaker",
       dates: "2026",
@@ -149,14 +181,8 @@ export const DATA = {
           "This is not trying to be the fastest possible path. It is more useful when the action is important enough that a small review step is worth it.",
       },
       technologies: ["Python", "GPT-4", "TypeScript", "Agent Oversight"],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/mammadovziya/circuit-breaker",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/circuit-breaker",
+      links: [],
+      image: "",
       video: "",
     },
     {
@@ -169,39 +195,39 @@ export const DATA = {
       dates: "2026",
       active: true,
       description:
-        "A tool for reconstructing genome-scale metabolic models. I wanted to see whether protein-language-model embeddings could help with reaction-gene mapping, so I added ESM C 600M scoring and compared it with a no-ESM baseline.",
+        "An alpha FASTA-to-SBML toolkit for bacterial genome-scale metabolic reconstruction, combining pyrodigal gene calling, MMseqs2 reaction scoring, COBRApy/HiGHS model assembly, and inspectable evidence and quality-control artifacts.",
       proof: [
-        "ESM C 600M embeddings",
-        "Ablation benchmark",
-        "Bacteria + eukaryotes",
+        "FASTA to SBML",
+        "Evidence + QC artifacts",
+        "Reproducible benchmarks",
       ],
       caseStudy: {
         eyebrow: "AI for bio",
         role: "I built the reconstruction pipeline and the benchmark setup.",
         problem:
-          "Most GEM reconstruction tools lean heavily on homology. That works well in many cases, but I wanted to test whether protein embeddings could add another useful signal.",
+          "Turning a bacterial genome into a usable metabolic model requires more than annotation: every reaction needs traceable evidence, the assembled network needs validation, and the result has to be reproducible.",
         solution:
-          "gemiz combines sequence search, reaction evidence, COBRApy model building, and an ESM C embedding score. Then it solves and checks the model instead of stopping at annotation.",
+          "gemiz calls genes with pyrodigal, scores reaction evidence with MMseqs2, assembles and checks the network with COBRApy and HiGHS, and exports SBML together with inspectable evidence and QC artifacts.",
         impact: [
-          "Benchmarked the approach against gold-standard E. coli models like iML1515 and iJO1366.",
-          "Added a no-ESM mode so the embedding part can be tested honestly.",
-          "Made a base pipeline I can keep improving for different organisms.",
+          "Produces a complete FASTA-to-SBML reconstruction workflow for bacterial genomes.",
+          "Keeps reaction evidence and quality checks alongside the final model.",
+          "Supports reproducible comparisons with CarveMe and gold-standard models.",
         ],
         architecture: [
-          "DIAMOND and BioPython for the sequence side.",
-          "ESM C 600M embeddings for an extra reaction-gene score.",
-          "COBRApy and Gurobi for model assembly, gap filling, and checks.",
+          "pyrodigal for bacterial gene calling.",
+          "MMseqs2 for sequence-based reaction scoring.",
+          "COBRApy, HiGHS, and SBML for model assembly, solving, and export.",
         ],
         tradeoffs:
-          "Embeddings make the pipeline heavier. For me, the point was not to make the cheapest version, but to test whether the extra signal is worth it.",
+          "The public alpha currently focuses on bacterial genomes. Eukaryotic support and experimental embedding-based scoring remain outside the supported public workflow.",
       },
       technologies: [
         "Python",
-        "ESM C 600M",
+        "pyrodigal",
+        "MMseqs2",
         "COBRApy",
-        "BioPython",
-        "DIAMOND",
-        "Gurobi",
+        "HiGHS",
+        "SBML",
       ],
       links: [
         {
@@ -211,6 +237,101 @@ export const DATA = {
         },
       ],
       image: "https://opengraph.githubassets.com/portfolio/mammadovziya/gemiz",
+      video: "",
+    },
+    {
+      title: "esmc-reco",
+      category: "AI for Bio",
+      featured: false,
+      href: "",
+      dates: "2026",
+      active: true,
+      description:
+        "A research prototype for enzyme-function prediction from protein sequences. It generates ESM-2 embeddings, compares logistic-regression and MLP classifiers for EC-number prediction, and maps the predictions to KEGG metabolic reactions.",
+      proof: [
+        "ESM-2 embeddings",
+        "EC-number classifiers",
+        "KEGG reaction mapping",
+      ],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "ESM-2",
+        "scikit-learn",
+        "BioPython",
+        "Streamlit",
+        "KEGG",
+      ],
+      links: [],
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/esmc-reco",
+      video: "",
+    },
+    {
+      title: "whisper-az",
+      category: "Applied AI",
+      featured: false,
+      href: "https://github.com/mammadovziya/whisper-az",
+      dates: "2026",
+      active: true,
+      description:
+        "A reproducible Azerbaijani speech-recognition benchmark and LoRA fine-tuning pipeline for Whisper. A 13M-parameter adapter reduced FLEURS WER from 51.7% to 35.0%, close to full Whisper Medium at 34.3%.",
+      proof: [
+        "35.0% FLEURS WER",
+        "13M trainable parameters",
+        "51 MB LoRA adapter",
+      ],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "Transformers",
+        "PEFT/LoRA",
+        "Hugging Face",
+        "Whisper",
+      ],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/whisper-az",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/whisper-az",
+      video: "",
+    },
+    {
+      title: "library-prep-pipeline",
+      category: "AI for Bio",
+      featured: false,
+      href: "https://github.com/mammadovziya/library-prep-pipeline",
+      dates: "2026",
+      active: true,
+      description:
+        "A controlled-alpha platform for preparing large molecular libraries for virtual screening. PostgreSQL owns job state, NATS JetStream queues the work, and each RDKit/nvMolKit chemistry job runs in a bounded offline container on one approved GPU host.",
+      proof: [
+        "PostgreSQL source of truth",
+        "JetStream leases + fencing",
+        "Bounded GPU sandbox",
+      ],
+      technologies: [
+        "Go",
+        "Python",
+        "Next.js",
+        "PostgreSQL",
+        "NATS JetStream",
+        "SeaweedFS/S3",
+        "Docker",
+        "RDKit",
+        "nvMolKit",
+      ],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/library-prep-pipeline",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image:
+        "https://opengraph.githubassets.com/portfolio/mammadovziya/library-prep-pipeline",
       video: "",
     },
     {
@@ -249,7 +370,15 @@ export const DATA = {
         tradeoffs:
           "Generated tools still need a human to review them. I see it as a way to start faster, not as something that should deploy unattended.",
       },
-      technologies: ["Python", "TypeScript", "Node.js", "Claude API", "MCP"],
+      technologies: [
+        "TypeScript",
+        "Next.js",
+        "OpenAI API",
+        "Supabase",
+        "MCP SDK",
+        "Zod",
+        "SSE",
+      ],
       links: [
         {
           type: "Source",
@@ -269,7 +398,7 @@ export const DATA = {
       active: true,
       description:
         "A fermentation planning tool from Edinburgh BioHackathon 2026. It uses GEMs and FBA/FVA to help compare media choices for four fungi, then turns a large design-of-experiments table into a smaller set of runs.",
-      proof: ["FBA/FVA media design", "4 fungal species", "~80 to ~15 runs"],
+      proof: ["FBA/FVA media design", "4 fungal species", "81 to 15 conditions"],
       technologies: [
         "Python",
         "COBRApy",
@@ -292,11 +421,15 @@ export const DATA = {
       category: "Developer Tools",
       featured: false,
       href: "https://github.com/mammadovziya/deathlog",
-      dates: "2025",
+      dates: "2026",
       active: true,
       description:
         "A CLI for writing incident reports from Git commits. The goal was simple: take the boring first draft of a post-mortem and make it fast, cheap, and repeatable.",
-      proof: ["~90% faster reports", "~$0.01 per run", "Pip-installable CLI"],
+      proof: [
+        "30-second drafts",
+        "Pip-installable CLI",
+        "Blame-free Markdown reports",
+      ],
       technologies: ["Python", "Claude 3.5 Sonnet", "CLI", "Git"],
       links: [
         {
@@ -304,29 +437,128 @@ export const DATA = {
           href: "https://github.com/mammadovziya/deathlog",
           icon: <Icons.github className="size-3" />,
         },
+        {
+          type: "Demo",
+          href: "https://deathlog.ziyamammadov.me",
+          icon: <Icons.globe className="size-3" />,
+        },
       ],
       image: "https://opengraph.githubassets.com/portfolio/mammadovziya/deathlog",
       video: "",
     },
     {
-      title: "cognicart",
+      title: "remote-iterm",
+      category: "Developer Tools",
+      featured: false,
+      href: "https://github.com/mammadovziya/remote-iterm",
+      dates: "2026",
+      active: true,
+      description:
+        "A local-network bridge for controlling macOS iTerm2 from a phone, with live terminal output, tab and window management, command broadcasting, and a mobile PWA.",
+      proof: [
+        "Live Socket.IO terminal",
+        "Multi-window broadcasting",
+        "Installable CLI + PWA",
+      ],
+      technologies: [
+        "TypeScript",
+        "React",
+        "Vite",
+        "Express",
+        "Socket.IO",
+        "iTerm2",
+      ],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/remote-iterm",
+          icon: <Icons.github className="size-3" />,
+        },
+        {
+          type: "Demo",
+          href: "https://remote-iterm.ziyamammadov.me",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/remote-iterm",
+      video: "",
+    },
+    {
+      title: "ytmusic-player",
+      category: "Developer Tools",
+      featured: false,
+      href: "https://github.com/mammadovziya/ytmusic-player",
+      dates: "2026",
+      active: true,
+      description:
+        "A cross-platform YouTube Music terminal player for Windows, macOS, and Linux, with search, keyboard-first playback, playlists, downloads, and remote CLI controls.",
+      proof: [
+        "Cross-platform npm binaries",
+        "mpv + yt-dlp playback",
+        "Local playlists, no telemetry",
+      ],
+      technologies: ["TypeScript", "Bun", "mpv", "yt-dlp", "CLI/TUI"],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/ytmusic-player",
+          icon: <Icons.github className="size-3" />,
+        },
+        {
+          type: "npm",
+          href: "https://www.npmjs.com/package/ytmusic-player",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image:
+        "https://opengraph.githubassets.com/portfolio/mammadovziya/ytmusic-player",
+      video: "",
+    },
+    {
+      title: "rss-gen",
+      category: "Developer Tools",
+      featured: false,
+      href: "https://github.com/mammadovziya/rss-gen",
+      dates: "2026",
+      active: true,
+      description:
+        "A visual, local-first RSS feed builder for sites without feeds. Select repeated page elements, save reusable recipes, and extract content from static or JavaScript-heavy pages.",
+      proof: [
+        "Point-and-click selectors",
+        "Static + Playwright extraction",
+        "Reusable feed recipes",
+      ],
+      technologies: [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "Playwright",
+        "Upstash Redis",
+        "Docker",
+      ],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/rss-gen",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/rss-gen",
+      video: "",
+    },
+    {
+      title: "CogniCart",
       category: "Cognitive Science & HCI",
       featured: false,
-      href: "https://github.com/mammadovziya/cognicart",
+      href: "",
       dates: "2026",
       active: true,
       description:
         "A virtual supermarket experiment for cognitive science. It looks at planning, working memory, inhibition, and flexibility, with eye tracking and behaviour logs built in.",
       proof: ["Unity simulation", "Eye-tracking pipeline", "Behavioral logging"],
-      technologies: ["Unity", "C#", "Eye Tracking", "HCI"],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/mammadovziya/cognicart",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/cognicart",
+      technologies: ["Unity", "C#", "WebGazer", "Behavioral Logging", "HCI"],
+      links: [],
+      image: "",
       video: "",
     },
     {
@@ -345,6 +577,16 @@ export const DATA = {
           type: "PyPI",
           href: "https://pypi.org/user/mammadovziya/",
           icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Currency API",
+          href: "https://github.com/mammadovziya/cbar-currency-rates",
+          icon: <Icons.github className="size-3" />,
+        },
+        {
+          type: "aznum2words",
+          href: "https://github.com/mammadovziya/aznum2words",
+          icon: <Icons.github className="size-3" />,
         },
       ],
       image: "",
@@ -376,7 +618,7 @@ export const DATA = {
       title: "Fully-Funded State Scholarship",
       issuer: "Republic of Azerbaijan — Ministry of Science and Education",
       href: "https://edu.gov.az/",
-      logoUrl: "",
+      logoUrl: "/scholarship.svg",
       start: "2025",
       end: "2029",
       description:
@@ -384,13 +626,14 @@ export const DATA = {
     },
     {
       title: "Bronze Medal — National Olympiad in Informatics",
-      issuer: "Republic of Azerbaijan",
-      href: "",
-      logoUrl: "",
+      issuer: "Ministry of Science and Education, Republic of Azerbaijan",
+      href:
+        "https://edu.gov.az/uploads/olimpiada/rfo/2023/%C4%B0nformatika-8-9.pdf",
+      logoUrl: "/bronze-medal.svg",
       start: "2023",
       end: "2023",
       description:
-        "Ranked 3rd nationally in Azerbaijan in algorithmic problem-solving.",
+        "Earned a bronze medal in Azerbaijan’s 2023 National Olympiad in Informatics.",
     },
   ],
   volunteer: [

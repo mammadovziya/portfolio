@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Bronze medal</title>
+  <path fill="#315b9a" d="M13 2h15l8 26H21L13 2Z"/>
+  <path fill="#d34d4d" d="M36 2h15L43 28H28l8-26Z"/>
+  <circle cx="32" cy="39" r="20" fill="#b87333"/>
+  <circle cx="32" cy="39" r="15" fill="#d69a5b"/>
+  <path fill="#8a4f22" d="m32 27 3.5 7.1 7.9 1.1-5.7 5.6 1.3 7.8-7-3.7-7 3.7 1.3-7.8-5.7-5.6 7.9-1.1L32 27Z"/>
+</svg>
