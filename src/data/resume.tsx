@@ -431,8 +431,8 @@ export const DATA = {
     {
       title: "Fully-Funded State Scholarship",
       issuer: "Republic of Azerbaijan — Ministry of Science and Education",
-      href: "https://edu.gov.az/",
-      logoUrl: "/scholarship.svg",
+      href: "https://dp.edu.az/",
+      logoUrl: "/dp-logo.png",
       start: "2025",
       end: "2029",
       description:
@@ -443,7 +443,7 @@ export const DATA = {
       issuer: "Ministry of Science and Education, Republic of Azerbaijan",
       href:
         "https://edu.gov.az/uploads/olimpiada/rfo/2023/%C4%B0nformatika-8-9.pdf",
-      logoUrl: "/bronze-medal.svg",
+      logoUrl: "/edu-logo.png",
       start: "2023",
       end: "2023",
       description:
