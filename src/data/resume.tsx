@@ -145,47 +145,6 @@ export const DATA = {
   ],
   projects: [
     {
-      title: "circuit breaker",
-      category: "Agentic AI",
-      featured: true,
-      href: "",
-      slug: "circuit-breaker",
-      caseStudyHref: "/projects/circuit-breaker",
-      dates: "2026",
-      active: true,
-      description:
-        "A guardrail for AI finance agents. Before an agent runs an action, circuit breaker checks the risk, compares it with a threshold, and keeps a clear log of what happened. I built it at AI Engine Hackathon in Scotland.",
-      proof: [
-        "GPT-4 risk assessor",
-        "Pre-execution guardrails",
-        "Structured audit logs",
-      ],
-      caseStudy: {
-        eyebrow: "Agentic AI oversight",
-        role: "I built the prototype at AI Engine Hackathon in Scotland.",
-        problem:
-          "AI agents can call finance tools very quickly. That is useful, but it also means a risky action can happen before a person has time to notice.",
-        solution:
-          "The idea is simple: put a small checkpoint before the real action. The agent proposes an action, GPT-4 gives a risk score and reason, and the system decides whether to allow, review, or block it.",
-        impact: [
-          "Showed how an agent can be checked before it touches a finance tool.",
-          "Made the reason for each decision easy to inspect later.",
-          "Kept the risk thresholds separate from the agent code, so the rules can change without rewriting everything.",
-        ],
-        architecture: [
-          "A small schema for the action the agent wants to run.",
-          "A risk prompt that returns severity, confidence, and a short explanation.",
-          "A decision gate that stops the action if it crosses the threshold.",
-        ],
-        tradeoffs:
-          "This is not trying to be the fastest possible path. It is more useful when the action is important enough that a small review step is worth it.",
-      },
-      technologies: ["Python", "GPT-4", "TypeScript", "Agent Oversight"],
-      links: [],
-      image: "",
-      video: "",
-    },
-    {
       title: "gemiz",
       category: "AI for Bio",
       featured: true,
@@ -237,33 +196,6 @@ export const DATA = {
         },
       ],
       image: "https://opengraph.githubassets.com/portfolio/mammadovziya/gemiz",
-      video: "",
-    },
-    {
-      title: "esmc-reco",
-      category: "AI for Bio",
-      featured: false,
-      href: "",
-      dates: "2026",
-      active: true,
-      description:
-        "A research prototype for enzyme-function prediction from protein sequences. It generates ESM-2 embeddings, compares logistic-regression and MLP classifiers for EC-number prediction, and maps the predictions to KEGG metabolic reactions.",
-      proof: [
-        "ESM-2 embeddings",
-        "EC-number classifiers",
-        "KEGG reaction mapping",
-      ],
-      technologies: [
-        "Python",
-        "PyTorch",
-        "ESM-2",
-        "scikit-learn",
-        "BioPython",
-        "Streamlit",
-        "KEGG",
-      ],
-      links: [],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/esmc-reco",
       video: "",
     },
     {
@@ -335,61 +267,6 @@ export const DATA = {
       video: "",
     },
     {
-      title: "mcpforge",
-      category: "Agentic AI",
-      featured: true,
-      href: "https://github.com/mammadovziya/mcpforge",
-      slug: "mcpforge",
-      caseStudyHref: "/projects/mcpforge",
-      dates: "2026",
-      active: true,
-      description:
-        "A small tool that takes a repo URL and tries to turn it into an MCP server. It reads the code, suggests useful tools, generates the server, and writes config files for Claude Desktop-style agents.",
-      proof: [
-        "Repo URL to MCP server",
-        "Tool schema generation",
-        "One-click agent config",
-      ],
-      caseStudy: {
-        eyebrow: "Developer tooling for agents",
-        role: "I built the repo analysis and generation workflow prototype.",
-        problem:
-          "MCP is powerful, but making a server still involves a lot of boilerplate. When you just want to test an idea, that setup gets in the way.",
-        solution:
-          "mcpforge takes a repo URL, looks for useful entry points, proposes tool schemas, generates server code, and prepares the agent config.",
-        impact: [
-          "Turned a multi-step MCP setup into a guided flow.",
-          "Made existing repos easier to try as agent tools.",
-          "Generated the config together with the server, so the output is easier to test.",
-        ],
-        architecture: [
-          "Repo ingestion and source analysis.",
-          "Tool schema planning from the code structure.",
-          "Server generation plus agent config output.",
-        ],
-        tradeoffs:
-          "Generated tools still need a human to review them. I see it as a way to start faster, not as something that should deploy unattended.",
-      },
-      technologies: [
-        "TypeScript",
-        "Next.js",
-        "OpenAI API",
-        "Supabase",
-        "MCP SDK",
-        "Zod",
-        "SSE",
-      ],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/mammadovziya/mcpforge",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/mcpforge",
-      video: "",
-    },
-    {
       title: "myco-optima",
       category: "AI for Bio",
       featured: false,
@@ -414,73 +291,6 @@ export const DATA = {
         },
       ],
       image: "https://opengraph.githubassets.com/portfolio/mammadovziya/myco-optima",
-      video: "",
-    },
-    {
-      title: "deathlog",
-      category: "Developer Tools",
-      featured: false,
-      href: "https://github.com/mammadovziya/deathlog",
-      dates: "2026",
-      active: true,
-      description:
-        "A CLI for writing incident reports from Git commits. The goal was simple: take the boring first draft of a post-mortem and make it fast, cheap, and repeatable.",
-      proof: [
-        "30-second drafts",
-        "Pip-installable CLI",
-        "Blame-free Markdown reports",
-      ],
-      technologies: ["Python", "Claude 3.5 Sonnet", "CLI", "Git"],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/mammadovziya/deathlog",
-          icon: <Icons.github className="size-3" />,
-        },
-        {
-          type: "Demo",
-          href: "https://deathlog.ziyamammadov.me",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/deathlog",
-      video: "",
-    },
-    {
-      title: "remote-iterm",
-      category: "Developer Tools",
-      featured: false,
-      href: "https://github.com/mammadovziya/remote-iterm",
-      dates: "2026",
-      active: true,
-      description:
-        "A local-network bridge for controlling macOS iTerm2 from a phone, with live terminal output, tab and window management, command broadcasting, and a mobile PWA.",
-      proof: [
-        "Live Socket.IO terminal",
-        "Multi-window broadcasting",
-        "Installable CLI + PWA",
-      ],
-      technologies: [
-        "TypeScript",
-        "React",
-        "Vite",
-        "Express",
-        "Socket.IO",
-        "iTerm2",
-      ],
-      links: [
-        {
-          type: "Source",
-          href: "https://github.com/mammadovziya/remote-iterm",
-          icon: <Icons.github className="size-3" />,
-        },
-        {
-          type: "Demo",
-          href: "https://remote-iterm.ziyamammadov.me",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/remote-iterm",
       video: "",
     },
     {
@@ -515,35 +325,39 @@ export const DATA = {
       video: "",
     },
     {
-      title: "rss-gen",
-      category: "Developer Tools",
-      featured: false,
-      href: "https://github.com/mammadovziya/rss-gen",
+      title: "Social Media Moderation",
+      category: "Applied AI",
+      featured: true,
+      href: "https://github.com/mammadovziya/social_media_moderation",
       dates: "2026",
       active: true,
       description:
-        "A visual, local-first RSS feed builder for sites without feeds. Select repeated page elements, save reusable recipes, and extract content from static or JavaScript-heavy pages.",
+        "VM-ready moderation microservices for posts, comments, usernames, and images. The system combines OpenAI-based classification with deterministic policies, OCR, and perceptual-image matching behind one documented REST API.",
       proof: [
-        "Point-and-click selectors",
-        "Static + Playwright extraction",
-        "Reusable feed recipes",
+        "3 Spring Boot services",
+        "Text + image moderation",
+        "Hardened Docker deployment",
       ],
       technologies: [
-        "Next.js 16",
-        "React 19",
-        "TypeScript",
-        "Playwright",
-        "Upstash Redis",
-        "Docker",
+        "Java 21",
+        "Spring Boot",
+        "OpenAI API",
+        "PostgreSQL",
+        "Flyway",
+        "Docker Compose",
+        "Tesseract OCR",
+        "PDQ Hashing",
+        "OpenAPI",
       ],
       links: [
         {
           type: "Source",
-          href: "https://github.com/mammadovziya/rss-gen",
+          href: "https://github.com/mammadovziya/social_media_moderation",
           icon: <Icons.github className="size-3" />,
         },
       ],
-      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/rss-gen",
+      image:
+        "https://opengraph.githubassets.com/portfolio/mammadovziya/social_media_moderation",
       video: "",
     },
     {

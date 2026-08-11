@@ -344,8 +344,8 @@ export default async function Page() {
                 </h2>
                 <p className="mx-auto max-w-[720px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   A few projects I built while learning, testing ideas, and
-                  working with teams. Most of them are about agents, developer
-                  tools, or bio-AI.
+                  working with teams. They focus on computational biology,
+                  applied AI, developer tools, and HCI.
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-sm text-muted-foreground">
