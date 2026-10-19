@@ -1,0 +1,105 @@
+---
+title: "What Gödel actually proved"
+publishedAt: "2026-09-14"
+updatedAt: "2026-10-19"
+summary: "How arithmetic can describe its own proofs, why that creates incompleteness, and where the claims about minds and AI go too far."
+category: "Mathematics"
+tags: ["Logic", "Gödel", "Computability"]
+---
+
+Gödel’s theorem tends to show up as a slogan: some truths cannot be proved. But proved where? Under what logical rules? Without answering those questions, an exact theorem has been reduced to a fuzzy statement about the limits of human knowledge.
+
+Arithmetic can formulate statements about proofs. A formal system does not have to become aware of itself. What it needs is a way to represent symbols, operate on those representations, and test whether a sequence is a proof.
+
+## Three conditions that matter
+
+Let $T$ be a classical first-order theory extending enough arithmetic, such as Robinson arithmetic $Q$. Assume that its axioms are computably enumerable and that it is consistent.
+
+Computable enumerability means an algorithm can list the axioms, possibly forever. Consistency means there is no sentence that $T$ proves together with its negation. Completeness would mean that for every sentence $\varphi$, one of the following holds:
+
+$$
+T\vdash\varphi \quad\text{or}\quad T\vdash\neg\varphi.
+$$
+
+The Gödel–Rosser form of the first incompleteness theorem says these assumptions prevent completeness. There is a sentence that $T$ can neither prove nor refute. This statement uses ordinary consistency; the original Gödel argument used a stronger assumption to establish the unprovability of the negation. [Richard Zach’s textbook](https://ic.openlogicproject.org/) develops the distinctions and proofs.
+
+Removing a condition changes the situation. The collection of every sentence true in the standard natural numbers is complete and consistent, but it is not computably enumerable. Axiomatization, arithmetic strength, and consistency are doing real work.
+
+## Give a proof a number
+
+Suppose every symbol has a positive integer code. A finite sequence can be encoded by prime exponents:
+
+$$
+(a_1,\ldots,a_k)\longmapsto 2^{a_1}3^{a_2}\cdots p_k^{a_k}.
+$$
+
+Unique factorization lets us recover the sequence. This is an illustration of the encoding idea, not the whole formal construction.
+
+Once formulas and proof sequences have codes, checking syntax becomes a problem about natural numbers. For an effectively axiomatized theory, proofs can include finite certificates witnessing an axiom’s appearance in the enumeration. This gives a suitably checkable proof relation, represented arithmetically as $\operatorname{Proof}_T(p,n)$.
+
+Define:
+
+$$
+\operatorname{Prov}_T(n)\equiv\exists p\,\operatorname{Proof}_T(p,n).
+$$
+
+The formula says a proof with conclusion code $n$ exists. It does not say the conclusion is true.
+
+## Self-reference without a paradox
+
+The diagonal lemma supplies the missing step. Given a formula $\psi(x)$ with one free variable, there is a sentence $G$ such that
+
+$$
+T\vdash G\leftrightarrow\psi(\ulcorner G\urcorner).
+$$
+
+The brackets denote the code of a sentence. Choose $\psi(x)=\neg\operatorname{Prov}_T(x)$. Then:
+
+$$
+T\vdash G\leftrightarrow\neg\operatorname{Prov}_T(\ulcorner G\urcorner).
+$$
+
+Informally, $G$ says that it has no proof in $T$. It does not say that it is false. That distinction keeps the construction from being the liar paradox in mathematical clothing.
+
+Suppose $T\vdash G$. A concrete proof then exists, and the theory can verify its code. Consequently,
+
+$$
+T\vdash\operatorname{Prov}_T(\ulcorner G\urcorner).
+$$
+
+But the defining equivalence also gives its negation. So a consistent $T$ cannot prove this $G$. Viewed externally in the standard natural numbers, no such proof exists, which makes this particular sentence true.
+
+That sketch establishes one direction. It does not, under consistency alone, establish that $T$ cannot prove $\neg G$. Gödel’s stronger hypothesis or Rosser’s modified construction is needed for the full independence conclusion. It is easy to lose this detail when compressing the proof into a paragraph.
+
+## Why adding the sentence does not finish arithmetic
+
+If we add a suitable independent sentence as a new axiom while preserving consistency, the enlarged theory can prove more. It remains effectively axiomatized and arithmetically strong, so incompleteness applies again.
+
+The limit moves with the system. There is no single sentence that stays unprovable in every stronger theory.
+
+For a conventional theory such as Peano arithmetic with its standard proof predicate, the second theorem says that consistency also prevents a proof of its own standard consistency statement:
+
+$$
+\operatorname{Con}(T)\equiv\neg\operatorname{Prov}_T(\ulcorner 0=1\urcorner),
+\qquad T\nvdash\operatorname{Con}(T).
+$$
+
+The usual derivability conditions matter here. The result does not cover every formula someone might choose to call “consistency,” nor does it rule out relative consistency proofs in stronger theories.
+
+## Where minds and AI enter, and where they do not
+
+An AI using a fixed, consistent, effectively axiomatized arithmetic theory inherits that theory’s limitations. So does a human who confines every proof to the same theory.
+
+Claiming that humans therefore transcend all machines adds a premise: that a human can reliably recognize the relevant theory’s consistency and the truth of its Gödel sentence. The theorem itself does not provide that ability. Humans also change assumptions, make mistakes, and disagree.
+
+There is no conflict with the completeness theorem for first-order logic either. That theorem concerns truth in every model of the axioms. A sentence true in the standard natural numbers may fail in a nonstandard model of $T$.
+
+The result is narrower, and more unsettling, than a slogan about mystery. We can specify the rules precisely, make proof checking mechanical, and still fail to decide every arithmetic sentence using those rules.
+
+## The assumption worth questioning
+
+The question I keep coming back to is what lets us call a sentence true when a particular theory cannot prove it. Here, truth means truth in the standard natural numbers; the claim about provability depends on the theory and the assumptions made about it. Leaving either side unstated makes the result sound much broader than it is.
+
+## Reading
+
+- [Richard Zach, Incompleteness and Computability](https://ic.openlogicproject.org/): a proof-oriented route through coding, diagonalization, and both theorems.

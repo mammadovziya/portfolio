@@ -1,0 +1,134 @@
+---
+title: "A model can fit every observation and still be wrong"
+publishedAt: "2026-09-28"
+updatedAt: "2026-10-19"
+summary: "Null spaces, regularization, and the difference between collecting more observations and learning something new."
+category: "Mathematics"
+tags: ["Inverse Problems", "Linear Algebra", "Modelling"]
+---
+
+Consider a measurement device for the sum of two variables. It always gives the value ten. One model says these variables are four and six. Another says they are minus two and twelve. Both models fit every measurement perfectly.
+
+Even a perfect measurement instrument cannot distinguish between them. The measurement has discarded the information we need to tell them apart.
+
+This is an inverse problem: infer a hidden state from its observable consequences. The first question should be whether the hidden state is identifiable at all.
+
+## What the measurement cannot see
+
+Consider a linear forward model:
+
+$$
+y=Ax,\qquad A\in\mathbb R^{m\times n}.
+$$
+
+If $z$ belongs to the null space of $A$, then
+
+$$
+Az=0\quad\Longrightarrow\quad A(x+z)=Ax.
+$$
+
+Every state in $x+\ker(A)$ produces the same observation. The measurements identify an equivalence class, not necessarily a unique state.
+
+For our sensor,
+
+$$
+A=\begin{bmatrix}1&1\end{bmatrix},\qquad y=10.
+$$
+
+All solutions have the form
+
+$$
+x=\begin{bmatrix}5+t\\5-t\end{bmatrix},\qquad t\in\mathbb R.
+$$
+
+The invisible direction is $(1,-1)^\top$. A trillion noiseless readings of the same sum leave it invisible. Repetition can improve precision when there is noise; it cannot change the rank of the measurement operator. The distinction between identifiable parameter combinations and redundant parameters also appears in [MIT’s system-identification notes](https://underactuated.csail.mit.edu/sysid.html).
+
+## Regularization chooses an answer
+
+A common response is to penalize complicated solutions:
+
+$$
+\hat x_\lambda=\arg\min_x\left\{\|Ax-y\|_2^2+\lambda\|x\|_2^2\right\},\qquad\lambda>0.
+$$
+
+The minimizer is unique because $A^\top A+\lambda I$ is positive definite. But uniqueness of the optimization result does not imply identification of the physical state.
+
+Here the objective is
+
+$$
+(x_1+x_2-10)^2+\lambda(x_1^2+x_2^2).
+$$
+
+Setting both partial derivatives to zero gives $x_1=x_2$. Substitution yields
+
+$$
+\hat x_1=\hat x_2=\frac{10}{2+\lambda}.
+$$
+
+As $\lambda\to0^+$, we approach $(5,5)$, the minimum-norm exact solution. The sensor never told us that the two quantities were equal. The penalty preferred that answer.
+
+In Bayesian language, a Gaussian likelihood and an isotropic zero-mean Gaussian prior produce the same kind of objective, with $\lambda$ determined by their variances. That can be a reasonable assumption. It is still an assumption, not an extra observation.
+
+## Uniqueness is only half the problem
+
+Now suppose $A$ is invertible but nearly singular:
+
+$$
+A=\begin{bmatrix}1&0\\0&\varepsilon\end{bmatrix},\qquad0<\varepsilon\ll1.
+$$
+
+The inverse exists. Nevertheless, a measurement perturbation $\delta y=(0,\eta)^\top$ gives
+
+$$
+\delta x=A^{-1}\delta y=\begin{bmatrix}0\\\eta/\varepsilon\end{bmatrix}.
+$$
+
+With $\varepsilon=10^{-6}$, a millionth of measurement error becomes an error of one in the second recovered coordinate. An identifiable state can still be difficult to estimate reliably.
+
+The singular value decomposition makes the issue explicit. Write $A=U\Sigma V^\top$. For a nonzero singular value $\sigma_i$, inversion divides the observation component along $u_i$ by $\sigma_i$. Small singular values amplify noise. Zero singular values hide directions completely.
+
+Ridge regularization replaces that inverse factor with
+
+$$
+\frac{\sigma_i}{\sigma_i^2+\lambda}.
+$$
+
+For tiny $\sigma_i$, this suppresses amplification. The price is bias. We have traded some fidelity for stability rather than discovered information that the instrument never recorded.
+
+## Which extra observation would help?
+
+A new sensor measuring the difference changes the problem:
+
+$$
+B=\begin{bmatrix}1&1\\1&-1\end{bmatrix}.
+$$
+
+Its determinant is $-2$. Sum and difference together recover both quantities. If they are $s$ and $d$,
+
+$$
+x_1=\frac{s+d}{2},\qquad x_2=\frac{s-d}{2}.
+$$
+
+The useful question was which measurement distinguishes the competing explanations. Collecting more of the same was not enough.
+
+For nonlinear models $y=F(\theta)$, a similar local warning comes from the Jacobian $J_F(\theta)$. Directions in its null space are invisible to first order. This is a local sensitivity test, not a complete global identifiability theorem: nonlinear models may have separated parameter values with identical outputs even when the Jacobian has full rank nearby.
+
+For example, observing $\theta^2$ identifies a nonzero parameter locally but cannot globally distinguish $\theta$ from $-\theta$.
+
+## Fitting, predicting, and explaining
+
+Non-identifiable parameters do not make every prediction useless. In the sum example, the sum is known exactly. The difference is unconstrained. Whether that matters depends on the question being asked.
+
+A model can be reliable for an observable quantity while offering an unsupported account of the hidden mechanism. Good predictions alone do not settle that distinction.
+
+Before trusting a fitted model, I would ask: which alternatives produce the same observations, which assumptions selected this solution, and what experiment would separate the alternatives?
+
+Sometimes the next useful step is a better optimizer. Sometimes it is a measurement that sees a different direction.
+
+## The experiment I would ask for
+
+I would rather see one experiment that separates two competing explanations than a smaller fitting error that leaves them indistinguishable. In the sum example, that means measuring something sensitive to the difference. Before asking for a larger dataset, I would ask whether the proposed observations can distinguish the alternatives at all.
+
+## Reading
+
+- [Russ Tedrake, System Identification](https://underactuated.csail.mit.edu/sysid.html): parameter estimation, identifiable combinations, and the role of experimental excitation.

@@ -1,7 +1,7 @@
 import { HackathonCard } from "@/components/hackathon-card";
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { ProjectCard } from "@/components/project-card";
+import { BrowserDataPanel } from "@/components/browser-data";
 import { ResumeCard } from "@/components/resume-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -11,11 +11,8 @@ import { cn } from "@/lib/utils";
 import { ArrowRightIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Markdown from "react-markdown";
 
-import { getPortfolioProjects, GitHubProject } from "@/lib/github";
-import { Icons } from "@/components/icons";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -79,70 +76,17 @@ const profilePageJsonLd = {
   ],
 };
 
-type RenderProject = {
-  title: string;
-  href: string;
-  description: string;
-  dates: string;
-  technologies: readonly string[];
-  image?: string;
-  video?: string;
-  category?: string;
-  featured?: boolean;
-  caseStudyHref?: string;
-  proof?: readonly string[];
-  links?: readonly {
-    icon: ReactNode;
-    type: string;
-    href: string;
-  }[];
+const projectSummaries: Record<string, string> = {
+  gemiz: "Turning bacterial genome sequences into metabolic models, with evidence and quality checks alongside each result.",
+  "library-prep-pipeline": "A GPU-accelerated platform that prepares molecular libraries for virtual screening.",
+  "Governed Investment Assistant": "A bilingual AI assistant for portfolio analysis, with checked calculations and traceable sources.",
+  "myco-optima": "A tool for planning fungal fermentation experiments and narrowing down which conditions to test.",
 };
 
-export default async function Page() {
-  const portfolioUrl = DATA.portfolioUrl;
-  const hasCuratedProjects = DATA.projects.length > 0;
-  let portfolioProjects: GitHubProject[] = [];
-
-  if (!hasCuratedProjects && portfolioUrl) {
-    portfolioProjects = await getPortfolioProjects(portfolioUrl);
-
-    // Add GitHub and Website icons back since they couldn't be serialized effectively
-    portfolioProjects = portfolioProjects.map((project) => ({
-      ...project,
-      links: project.links.map((link) => ({
-        ...link,
-        icon:
-          link.type === "Source" ? (
-            <Icons.github className="size-3" />
-          ) : (
-            <Icons.globe className="size-3" />
-          ),
-      })),
-    }));
-  }
-
-  // Prefer curated DATA.projects; fall back to scraped GitHub portfolio list.
-  const projectsToRender: readonly RenderProject[] =
-    hasCuratedProjects ? DATA.projects : portfolioProjects;
-
-  // Group projects by category when curated data is in use; otherwise render flat.
-  const featuredProjects = projectsToRender
-    .filter((project) => project.featured || project.caseStudyHref)
-    .slice(0, 3);
-  const projectGroups: { name: string | null; projects: RenderProject[] }[] =
-    (() => {
-      const src = Array.from(projectsToRender);
-      const hasCategories =
-        src.length > 0 && typeof src[0]?.category === "string";
-      if (!hasCategories) return [{ name: null, projects: src }];
-      const buckets = new Map<string, RenderProject[]>();
-      for (const p of src) {
-        const cat: string = p.category || "Other";
-        if (!buckets.has(cat)) buckets.set(cat, []);
-        buckets.get(cat)!.push(p);
-      }
-      return Array.from(buckets, ([name, projects]) => ({ name, projects }));
-    })();
+export default function Page() {
+  const selectedProjects = DATA.projects.filter(
+    (project) => project.title in projectSummaries
+  );
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-10">
@@ -158,12 +102,11 @@ export default async function Page() {
           <div className="flex items-start justify-between gap-4">
             <div className="flex min-w-0 flex-1 flex-col space-y-4">
               <div className="space-y-2">
-                <BlurFadeText
-                  delay={BLUR_FADE_DELAY}
-                  className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
-                  yOffset={8}
-                  text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
-                />
+                <BlurFade delay={BLUR_FADE_DELAY}>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                    Hi, I&apos;m {DATA.name.split(" ")[0]} 👋
+                  </h1>
+                </BlurFade>
                 <BlurFadeText
                   className="max-w-[600px] text-base text-muted-foreground sm:text-lg"
                   delay={BLUR_FADE_DELAY}
@@ -331,133 +274,38 @@ export default async function Page() {
           </div>
         </div>
       </section>
-      <section id="projects">
-        <div className="space-y-10 w-full py-12">
-          <BlurFade delay={BLUR_FADE_DELAY * 11}>
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                  Projects
-                </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Things I have been building
-                </h2>
-                <p className="mx-auto max-w-[720px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  A few projects I built while learning, testing ideas, and
-                  working with teams. They focus on computational biology,
-                  applied AI, developer tools, and HCI.
+      <section id="projects" className="space-y-4">
+        <BlurFade delay={BLUR_FADE_DELAY * 11}>
+          <h2 className="text-xl font-bold">Selected projects</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            A few things I’ve been working on in AI and computational biology.
+          </p>
+        </BlurFade>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {selectedProjects.map((project, id) => (
+            <BlurFade key={project.title} delay={BLUR_FADE_DELAY * 12 + id * 0.05}>
+              <Link
+                href={"caseStudyHref" in project ? project.caseStudyHref : project.href}
+                className="group flex h-full flex-col rounded-lg border bg-card p-4 transition-colors hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <h3 className="text-sm font-semibold">{project.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {projectSummaries[project.title]}
                 </p>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-1 text-sm text-muted-foreground">
-                <div>
-                  <span className="font-semibold text-foreground">
-                    {DATA.projects.length}
-                  </span>{" "}
-                  projects here
-                </div>
-                <div aria-hidden className="h-4 w-px bg-border" />
-                <div>
-                  <span className="font-semibold text-foreground">6,000+</span>{" "}
-                  PyPI downloads
-                </div>
-                <div aria-hidden className="h-4 w-px bg-border" />
-                <div>
-                  <span className="font-semibold text-foreground">2</span>{" "}
-                  hackathons
-                </div>
-              </div>
-            </div>
-          </BlurFade>
-          {featuredProjects.length > 0 && (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {featuredProjects.map((project, id) => (
-                <BlurFade
-                  key={project.title}
-                  delay={BLUR_FADE_DELAY * 11.25 + id * 0.05}
-                >
-                  <Link
-                    href={project.caseStudyHref ?? project.href}
-                    className="group flex h-full min-h-[220px] flex-col rounded-lg border bg-card p-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      {project.category ?? "Project"}
-                    </div>
-                    <h3 className="mt-2 text-base font-semibold leading-tight">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-4 text-xs leading-relaxed text-muted-foreground">
-                      {project.description}
-                    </p>
-                    {project.proof && project.proof.length > 0 && (
-                      <div className="mt-auto flex flex-wrap gap-1 pt-4">
-                        {project.proof.slice(0, 2).map((item) => (
-                          <Badge
-                            key={item}
-                            variant="secondary"
-                            className="px-1.5 py-0 text-[10px] leading-5"
-                          >
-                            {item}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-foreground">
-                      {project.caseStudyHref
-                        ? "Read how I built it"
-                        : "Open project"}
-                      <ArrowRightIcon
-                        aria-hidden="true"
-                        className="size-3 transition-transform group-hover:translate-x-0.5"
-                      />
-                    </span>
-                  </Link>
-                </BlurFade>
-              ))}
-            </div>
-          )}
-          <div className="space-y-10 max-w-[800px] mx-auto">
-            {projectGroups.map((group, gi) => (
-              <div key={group.name ?? "all"} className="space-y-4">
-                {group.name && (
-                  <BlurFade
-                    delay={BLUR_FADE_DELAY * (11.5 + gi * 0.15)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                        {group.name}
-                      </h3>
-                      <div className="h-px flex-1 bg-border" />
-                      <span className="text-xs text-muted-foreground tabular-nums">
-                        {group.projects.length}
-                      </span>
-                    </div>
-                  </BlurFade>
-                )}
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {group.projects.map((project, id) => (
-                    <BlurFade
-                      key={project.title}
-                      delay={BLUR_FADE_DELAY * (12 + gi * 0.2) + id * 0.05}
-                    >
-                      <ProjectCard
-                        href={project.caseStudyHref ?? project.href}
-                        title={project.title}
-                        description={project.description}
-                        dates={project.dates}
-                        tags={project.technologies}
-                        proof={project.proof}
-                        image={project.image}
-                        video={project.video}
-                        priority={gi === 0 && id === 0}
-                        links={project.links}
-                      />
-                    </BlurFade>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-medium">
+                  {"caseStudyHref" in project ? "Read about it" : "View on GitHub"}
+                  <ArrowRightIcon aria-hidden="true" className="size-3 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </BlurFade>
+          ))}
         </div>
+        <BlurFade delay={BLUR_FADE_DELAY * 13}>
+          <Link href={DATA.contact.social.GitHub.url + "?tab=repositories"} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground hover:underline">
+            More projects on GitHub
+            <ArrowRightIcon aria-hidden="true" className="size-3.5" />
+          </Link>
+        </BlurFade>
       </section>
       <section id="hackathons">
         <div className="space-y-12 w-full py-12">
@@ -553,6 +401,7 @@ export default async function Page() {
           </BlurFade>
         </div>
       </section>
+      <BrowserDataPanel />
     </main>
   );
 }

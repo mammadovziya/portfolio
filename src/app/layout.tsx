@@ -1,3 +1,4 @@
+import { BackToTop } from "@/components/back-to-top";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -73,6 +75,7 @@ export default function RootLayout({
           <TooltipProvider delayDuration={0}>
             {children}
             <Navbar />
+            <BackToTop />
             <Analytics />
           </TooltipProvider>
         </ThemeProvider>

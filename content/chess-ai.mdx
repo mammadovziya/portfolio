@@ -1,7 +1,10 @@
 ---
 title: "The Evolution of Chess in the Age of Artificial Intelligence"
 publishedAt: "2025-05-23"
+updatedAt: "2026-10-19"
 summary: "The relationship between artificial intelligence and chess has pushed both fields forward for more than 70 years. IBM's Deep Blue defeated world champion Garry Kasparov in 1997 and became a historic turning point. In 2017, AlphaZero opened a new era by learning chess through self-play, and today engines like Stockfish are used widely for analysis, training, and preparation."
+category: "AI"
+tags: ["Chess", "Machine Learning", "Self-play"]
 ---
 
 I have been interested in chess since I was a child, and that interest has stayed with me over the years. Even today, whenever I get the chance, I still enjoy playing it.
@@ -22,13 +25,13 @@ In the middle of the 20th century, researchers began asking whether computers co
 
 This kind of thinking led to the development of search algorithms such as **alpha-beta pruning**.
 
-Search-based approaches worked especially well in endgames, where the number of possible moves is smaller. But in the opening and middlegame, the number of possible variations is enormous. Chess is often estimated to have around `10^120` possible game paths, so brute-force search alone was not enough.
+The full game tree is too large to search exhaustively in ordinary play. Engines need ways to choose which branches to investigate and to evaluate positions before the game ends. Some endgames can be solved exactly using tablebases; that is different from saying every endgame is easy to search.
 
-### **Case-Based Reasoning and Experience**
+### Opening books are not the whole search algorithm
 
-Later, programmers started using **case-based reasoning**. The idea was to give a program access to a large database of human games, then let it find positions similar to the current one and choose a strong move based on those examples.
+An opening book can supply prepared moves in familiar positions. An endgame tablebase can provide exact results for supported positions with sufficiently few pieces. These are different mechanisms, and neither is a general account of how a chess engine chooses moves in unfamiliar positions.
 
-This was especially useful in the opening phase of the game. Instead of searching blindly through too many possibilities, the program could narrow the search and make decisions that looked more intelligent.
+It would be misleading to describe computer chess as a simple progression from search to case-based reasoning to neural networks. Search and learned evaluation can be combined.
 
 ### **Deep Blue and Kasparov**
 
@@ -44,11 +47,11 @@ In 2017, DeepMind introduced **AlphaZero**, and it started a new chapter in ches
 
 AlphaZero did not rely on hand-written opening theory or databases of human games. Instead, it learned by playing millions of games against itself and improving through its own mistakes. This method is called **reinforcement learning**.
 
-The most interesting part of AlphaZero was its use of **neural networks**. It developed strategies that sometimes looked strange, creative, and even beautiful to human players. Its games surprised the chess world and taught people new ways to think about positions.
+AlphaZero combined a neural network with **Monte Carlo tree search**. Learning did not replace search; it helped guide it. It developed strategies that sometimes looked strange, creative, and even beautiful to human players. Its games surprised the chess world and taught people new ways to think about positions.
 
 ### **The Current Role and Future of AI in Chess**
 
-Today, almost everyone who studies chess uses AI-based tools. Engines like **Stockfish**, **Leela Chess Zero**, and others are used for analysis, training, opening preparation, and post-game review.
+Chess engines are widely used for analysis, training, and preparation. Engines like **Stockfish**, **Leela Chess Zero**, and others are used for analysis, training, opening preparation, and post-game review.
 
 As AI continues to improve, these tools may become even more interactive. For example, they could create personalized learning paths for players instead of only showing the best move. AI could also help create new chess variants or hybrid tournaments where humans and AI systems work together.
 
@@ -57,3 +60,12 @@ As AI continues to improve, these tools may become even more interactive. For ex
 The relationship between chess and artificial intelligence has pushed both technology and the game forward for more than 70 years. From classical search methods to modern learning algorithms, AI's role in chess is not only technical. It is also philosophical.
 
 Chess asks a simple question: how should we make the best decision from a huge number of possibilities? AI has spent decades trying to answer that question, and in the process, it has changed both computer science and chess itself.
+
+## Strength is only one question
+
+For learning chess, I care more about an explanation of why a tempting move fails than another increase in playing strength. A best-move recommendation answers what to play, but it may leave the mistaken idea intact. The useful test is whether the explanation helps a player recognise a similar mistake in a different position.
+
+## Sources
+
+- [IBM: Deep Blue](https://www.ibm.com/history/deep-blue).
+- [DeepMind’s 2018 AlphaZero report](https://deepmind.google/blog/alphazero-shedding-new-light-on-chess-shogi-and-go/), following the initial 2017 results.

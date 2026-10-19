@@ -1,108 +1,80 @@
 ---
-title: "Haskell: The Language That Changes How You Think About Programming"
+title: "Haskell: following the types"
 publishedAt: "2026-02-12"
-summary: "In this article, we will talk about Haskell, one of the most interesting and intellectually rich languages in the programming world."
+summary: "Small examples of algebraic data types, lazy evaluation, and why concise code still needs careful reasoning."
+category: "Programming"
+tags: ["Haskell", "Functional Programming", "Type Systems"]
+updatedAt: "2026-10-19"
 ---
 
-> "Language shapes the way we think, and determines what we can think about."
+Haskell encourages a useful habit: say what a result looks like first, and work out how to produce it afterwards. That becomes concrete when a function needs to represent the absence of an answer.
 
-This idea from Benjamin Lee Whorf feels especially true when we talk about **Haskell**. For me, learning Haskell is not just about learning a new syntax. It is about looking at computation from a completely different angle.
+## Make absence part of the type
 
-If you come from a world where variables constantly change and loops update state step by step, Haskell can feel mysterious at first. But after a while, that mystery becomes one of the most powerful parts of the language.
-
-### The Essence of Haskell: A Functional Way of Thinking
-
-Haskell is a pure **functional programming** language. In simple terms, this means that instead of telling the computer exactly what to do step by step, we describe the problem more declaratively.
-
-Functional programming pushes you to think about data as a whole, not as something you keep changing piece by piece. You focus more on transformation and less on mutation.
-
-Haskell is not only an academic language either. It has been used in real-world systems, from Facebook's **Haxl** library to blockchain platforms like **Cardano**, and even in financial companies such as Barclays and Standard Chartered. Many strong universities, including Edinburgh, Oxford, and Cambridge, have also used Haskell when teaching programming because it trains students to think analytically from the beginning.
-
-### Core Features: Laziness and Strong Types
-
-There are a few ideas that make Haskell special:
-
-1. **A strong type system:** In Haskell, every value has a type (`v :: t`). For example, `42 :: Int` or `sqrt :: Float -> Float`. This type system catches many mistakes before the program even runs.
-2. **Lazy evaluation:** Haskell does not calculate the result of an expression until that result is actually needed. This makes it possible to work with **infinite lists**. For example, `[0..]` creates a list that starts at zero and continues forever, but Haskell only takes the part you need.
-3. **Recursion:** Haskell does not use `for` or `while` loops in the usual way. Everything is built around recursion. To process a list, you usually split it into an empty list `[]`, or into a head and tail with `(x:xs)`, where `x` is the head and `xs` is the tail.
-
-### Type Safety and Algebraic Data Types
-
-For me, one of the most beautiful parts of Haskell is **Algebraic Data Types** (ADTs). They let us model the world very precisely.
-
-For example, in many languages, handling whether a value exists or not can become painful because of `null`. In Haskell, we have the `Maybe a` type: either `Just a`, meaning the value exists, or `Nothing`, meaning it does not. This forces you to think about every possibility and helps prevent unexpected crashes.
-
-With keywords like `type` and `data`, we can create our own types and model more complex structures, such as logical expressions or mathematical expression trees.
-
-### Deep Mathematical and Historical Roots
-
-Haskell's strength does not come only from its design. It also comes from deep mathematical roots.
-
-1. **Lambda calculus:** The theoretical foundation of Haskell is lambda calculus, created by Alonzo Church in the 1930s.
-
-` \x -> x * 2 `
-
-Here, the `\` symbol is basically the keyboard version of the Greek letter **lambda**.
-
-2. **Currying and functional logic:** In Haskell, functions work through currying. A function type may look like this:
-
-`add :: Int -> Int -> Int`
-
-But conceptually, it is really:
-
-`Int -> (Int -> Int)`
-
-This means arguments can be passed one by one. That technique is called currying.
-
-> **Interesting fact:** The idea of currying existed before modern programming languages and computers as we know them. It came from attempts to model human logical reasoning in the early 20th century. Haskell Curry later systematized the idea, but its roots go back to the work of thinkers such as Moses Schonfinkel and Gottlob Frege. This is one reason Haskell code can sometimes feel close to a mathematical proof.
-
-3. **Peano and recursive structure:** Haskell's way of thinking is also connected to mathematics. For example, natural numbers can be modeled like this:
+Consider division that explicitly handles a zero denominator:
 
 ```haskell
-data Nat = Zero | Succ Nat
+safeDivide :: Double -> Double -> Maybe Double
+safeDivide _ 0 = Nothing
+safeDivide x y = Just (x / y)
+
+formatResult :: Maybe Double -> String
+formatResult Nothing  = "Cannot divide by zero"
+formatResult (Just x) = show x
 ```
 
-This structure is based on [Giuseppe Peano's axioms](https://en.wikipedia.org/wiki/Peano_axioms).
+The result type distinguishes a value from its absence. A caller can pattern-match on those cases. This improves the interface; it does not prove that every caller handles both cases. Incomplete patterns and partial functions can still fail at runtime.
 
-### Practical Examples: Short and Effective
+`data` defines a new data type. `type` defines a synonym for an existing type. Those are different tools, even when both make a signature easier to read.
 
-One of the first things you notice in Haskell is how compact the code can be. If you want to find the sum of the squares of all odd numbers in a list, you can write it in one line:
+## Functions can return functions
+
+The arrows in a function type associate to the right:
 
 ```haskell
-sumSqOdd xs = sum [ x * x | x <- xs, odd x ]
+add :: Int -> Int -> Int
+add x y = x + y
+
+addTen :: Int -> Int
+addTen = add 10
 ```
 
-This uses **list comprehension**, which feels very close to mathematical set notation.
+Read the first signature as `Int -> (Int -> Int)`. Supplying one argument produces a function waiting for the second. Partial application follows naturally from that representation.
 
-Higher-order functions such as `map`, `filter`, and `fold` are at the heart of Haskell. They let you pass functions as arguments to other functions, which makes code more modular and easier to reuse.
+## Laziness changes when work happens
 
-### Difficulties and Common Mistakes
+Haskell has non-strict evaluation semantics. Lazy evaluation is the usual implementation strategy. For example:
 
-Of course, Haskell is not perfect. For beginners, two of the hardest topics are usually **IO** and **monads**.
+```haskell
+firstFiveSquares :: [Integer]
+firstFiveSquares = take 5 [n * n | n <- [1..]]
+-- [1,4,9,16,25]
+```
 
-Haskell is a pure language, which means functions should not create side effects. But then a natural question appears: how do we print something to the screen? Haskell uses `main :: IO ()` as a bridge between the pure world of functions and the messy real world.
+The program can consume a finite prefix without constructing the entire infinite list. Replacing `take 5` with `sum` asks for something different: a result requiring the whole list, so this example would not finish.
 
-Efficiency is also important. For example, when combining lists with `(++)`, grouping operations from the right side instead of the left side, often through `foldr`, can improve performance from something like `O(m^2 * n)` to `O(m * n)`.
+Delaying work can also retain data or build up unevaluated expressions. Laziness is a tradeoff to understand, not a guarantee of low memory use. The [Haskell 2010 Report](https://www.haskell.org/onlinereport/haskell2010/haskellch3.html) specifies the language’s expression semantics.
 
-### My Experience and What I Learned
+## Shorter code is not automatically cheaper
 
-When I first met Haskell, I remember thinking: "How can a program exist without changing variables?"
+For singly linked lists, `(++)` traverses its left operand. If there are $m$ chunks of $n$ elements each, left-associated concatenation repeatedly traverses an accumulating prefix:
 
-But over time I understood that instead of constantly tracking the state of variables, thinking in terms of data flow can make the mind less tired. Learning Haskell helped me write cleaner and safer code in other languages too, including Java and Python.
+$$
+n+2n+\cdots+(m-1)n=\frac{nm(m-1)}{2}.
+$$
 
-Tools like **QuickCheck** also give a very different kind of confidence. Being able to test the correctness of a program automatically across hundreds of generated cases feels incredibly powerful.
+That accounts for $O(nm^2)$ traversal work, assuming the concatenated output is consumed. Right-associated concatenation traverses each chunk as a left operand at most once, giving $O(nm)$ work under the same assumptions.
 
-### Advice for Beginners
+The cost comes from the data structure and association, not from a rule that `foldr` is always fast and `foldl` is always slow.
 
-1. **Start with small steps:** Learn lists and recursion first.
-2. **Do not be afraid of GHCi:** The interactive environment is your best friend. Test small functions there.
-3. **Follow the types:** If your code does not compile, there is probably a type mismatch somewhere. Learn to read Haskell's error messages.
-4. **Do not obsess over monads at the beginning:** First learn how they are used in practice, for example with `do` notation, before trying to understand the full mathematical theory.
+## Purity does not mean a program cannot do anything
 
-### Conclusion
+An expression of type `IO a` describes an action that can produce an `a`. The runtime executes the program’s `main` action. Pure code can construct and combine descriptions of effects without treating arbitrary effectful execution as an ordinary pure function call.
 
-Haskell is not just a programming language. For someone new to functional programming, it is an intellectual adventure.
+Property-based tests can then check claims across generated inputs. They can expose counterexamples, but passing many cases is not a proof for every possible input.
 
-It will challenge you. It will question the way you think. But in the end, it can make you a more careful and more professional programmer.
+What I find useful here is the pressure to state assumptions clearly: where absence is possible, which data is demanded, and what a type does and does not guarantee.
 
-There is a saying: "A language that does not affect the way you think about programming is not worth learning." Haskell is definitely worth it.
+## What the type leaves open
+
+I would ask what a type rules out before treating a type-correct program as evidence that the idea is right. A function returning `Maybe a` makes absence explicit, but it does not tell us whether returning `Nothing` was the correct decision. That distinction is where I would start writing properties and looking for counterexamples.

@@ -1,46 +1,49 @@
 ---
-title: "Next.js 15"
+title: "Next.js 15: what actually changed"
 publishedAt: "2025-05-19"
-summary: "What is Next.js 15, why should you learn it, and how can you get started?"
+summary: "A version-specific look at asynchronous request APIs and caching, with an Azerbaijani learning resource."
+category: "Programming"
+tags: ["Next.js", "React", "Web Development"]
+updatedAt: "2026-10-19"
 ---
 
-If you build websites with React, you have probably heard the name Next.js. Next.js 15 is one of the newest versions of the framework, and I like to think of it as a tool that takes React to a more professional level.
+Next.js adds routing, rendering, and server-side app capabilities to React. A description of what the framework does is one thing. An explanation of what a specific version changes is another.
 
-In simple words, Next.js helps websites become faster, more flexible, and more production-ready. It gives you a lot of things that plain React does not handle by itself.
+The App Router and Server Components were built into Next.js before version 15. Calling them new in version 15 makes it difficult to understand what an upgrade accomplishes.
 
-## What Is New?
+## The changes to notice
 
-- **App Router** - a more modern way to organize pages and navigation.
-- **Server Components** - components that can run on the server, which can improve performance and reduce the amount of JavaScript sent to the browser.
-- **Edge Functions** - useful when you want your site to behave more intelligently, especially if you need to show different content based on location or request context.
+The [Next.js 15 release announcement](https://nextjs.org/blog/next-15) highlights asynchronous request APIs, changed caching defaults, and stable Turbopack support for development.
 
-## Why Learn It?
+Request-dependent APIs such as `cookies`, `headers`, and route parameters moved toward asynchronous access. For example, a version-15 App Router page reads its parameters like this:
 
-Today, if you want to build real websites or web apps, knowing only HTML and CSS is usually not enough. Companies, freelance clients, and startups often look for people who can work with frameworks like Next.js.
+```tsx
+export default async function Post({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <h1>{slug}</h1>;
+}
+```
 
-Learning it gives you a real advantage. It looks good on a CV, but more importantly, it helps you build projects that feel closer to real production software.
+This example is specifically for Next.js 15. It is not a statement that older projects already use the same parameter type.
 
-Next.js also makes React more practical. It brings SEO, server-side rendering, dynamic routing, API routes, layouts, deployment workflows, and many other features into one framework. In short, it makes your work easier and your results more professional.
+Caching also became something to inspect carefully: `fetch` and ordinary `GET` route handlers are not cached by default in the same way as earlier App Router defaults. Client page segments changed too, while shared layouts and back/forward navigation retained distinct caching behaviour. Treating every cache as one mechanism is a source of confusion.
 
-## How Can You Learn It?
+## Follow one request through the application
 
-Honestly, when I first started learning Next.js, I was a little confused too. There were many concepts, and it was not always clear where to begin. Later, I decided to organize what I learned and share it with others.
+For learning, I would start with one route and ask where each operation happens. Which component reads the data? Does the result depend on this request? What is sent to the browser? What should remain fresh on the next visit?
 
-That is why I created Azerbaijani video lessons on YouTube.
+Those questions make the abstractions easier to reason about than a long list of framework features. A page that appears correct on the first load can still behave unexpectedly after navigation or a data update.
 
-**You can watch the playlist here:**
+## My Azerbaijani lessons
 
-[My Next.js 15 lessons on YouTube](https://www.youtube.com/playlist?list=PL7qkMa1KCXoU--vFkFMiPva1HSBX4DsoK)
+I made a [Next.js 15 video playlist in Azerbaijani](https://www.youtube.com/playlist?list=PL7qkMa1KCXoU--vFkFMiPva1HSBX4DsoK) covering setup, routing, layouts, APIs, server components, and deployment.
 
-The playlist covers:
+These are version-specific notes, not a claim that Next.js 15 is the newest release. When following an older tutorial, check the project’s installed version and the matching documentation before copying its assumptions.
 
-- Setting up a project from zero
-- Routing and layouts
-- APIs and server components
-- Deployment, meaning how to put your site online
+## The second visit matters
 
-## Final Thoughts
-
-If you want to learn Next.js 15, you do not need to drown in endless resources at the beginning. Start step by step.
-
-I have already walked through part of the road, and now I want to make that road easier for others too.
+My first upgrade question would be what changes on the second visit. The initial page load can look right while navigation or cached data behaves differently. I would follow one changing piece of data through a reload, a client navigation, and a return visit before deciding that the upgrade preserved the behaviour I wanted.

@@ -1,0 +1,158 @@
+---
+title: "Symmetry decides what a model needs to learn"
+publishedAt: "2026-10-12"
+updatedAt: "2026-10-19"
+summary: "From rotating molecules to equivariant forces: how mathematical symmetry removes arbitrary choices, and what goes wrong when we impose too much."
+category: "Mathematics"
+tags: ["Group Theory", "Machine Learning", "Molecules"]
+---
+
+Rotate a molecule on the screen. Its coordinates change, but the scalar energy of an isolated molecule should not be affected by the coordinate system chosen. The coordinates of a force vector, on the other hand, must rotate along with the molecule.
+
+This gives us two useful requirements for a model. Some outputs must remain constant under a transformation, while others need to change in a predictable way.
+
+## Invariance and equivariance
+
+A group is a collection of transformations with composition, an identity, and inverses, satisfying associativity. Rotations are one example. Permutations of atom indices are another.
+
+Let $g\cdot x$ describe how a group element acts on an input. Invariance means
+
+$$
+f(g\cdot x)=f(x).
+$$
+
+Equivariance means
+
+$$
+f(g\cdot x)=\rho(g)f(x),
+$$
+
+where $\rho(g)$ is the corresponding action on the output. Invariance is the special case in which the output action does nothing.
+
+Suppose atomic coordinates are column vectors $r_i\in\mathbb R^3$. A rotation $R$ and translation $t$ act by
+
+$$
+r_i\mapsto Rr_i+t,\qquad R^\top R=I,\quad\det R=1.
+$$
+
+For an isolated system without an external directional field, a scalar energy model should satisfy
+
+$$
+E(Rr_1+t,\ldots,Rr_n+t)=E(r_1,\ldots,r_n).
+$$
+
+This condition removes dependence on a coordinate convention. It does not say that rotating a molecule relative to a fixed receptor or external field changes nothing; that rotates only part of the physical system.
+
+## Distances remove a nuisance
+
+Pairwise distances obey the required invariance:
+
+$$
+\|Rr_i+t-(Rr_j+t)\|^2
+=(r_i-r_j)^\top R^\top R(r_i-r_j)
+=\|r_i-r_j\|^2.
+$$
+
+A function built only from these distances is invariant to rigid motions. It also ignores reflections. We will return to that extra symmetry shortly.
+
+Relabelling atoms is another bookkeeping change, provided species labels, bonds, and other features move with them. A graph-level prediction should be permutation invariant. A list of atom-level predictions should reorder in the same way as the atoms.
+
+One simple way to obtain a graph-level invariant representation is
+
+$$
+f(X)=\rho\!\left(\sum_{i=1}^n\phi(x_i)\right).
+$$
+
+The sum is unchanged by reordering. Its suitability and expressive power still depend on the features and function classes; writing a sum does not automatically make a useful molecular model.
+
+## A coordinate update that respects geometry
+
+An equivariant graph layer can update coordinates using relative displacement vectors weighted by invariant scalars:
+
+$$
+r_i'=r_i+\sum_{j\ne i}(r_i-r_j)\alpha_{ij}.
+$$
+
+Assume $\alpha_{ij}$ is computed from invariant quantities such as distances and scalar node features, with a permutation-compatible rule. Under a rigid transformation,
+
+$$
+\begin{aligned}
+\widetilde r_i'
+&=Rr_i+t+\sum_{j\ne i}R(r_i-r_j)\alpha_{ij}\\
+&=Rr_i'+t.
+\end{aligned}
+$$
+
+The algebra enforces the transformation law, independent of the learned parameter values. This kind of construction is used in [E(n)-equivariant graph neural networks](https://arxiv.org/abs/2102.09844).
+
+Training examples still determine which interactions matter. They do not need to teach the layer that a rigid rotation should rotate the output.
+
+## Why forces rotate when energy does not
+
+For a differentiable energy model, define
+
+$$
+F_i(X)=-\nabla_{r_i}E(X).
+$$
+
+Write $Y=RX+t$ for the transformed configuration. Applying the chain rule to $E(Y)=E(X)$ gives
+
+$$
+R^\top\nabla_{y_i}E(Y)=\nabla_{r_i}E(X).
+$$
+
+Multiplication by $R$ yields
+
+$$
+F_i(Y)=RF_i(X).
+$$
+
+An invariant energy gives an equivariant force field. Defining forces as energy gradients also imposes a conservative field wherever the model is smooth. These structural choices are valuable in learned interatomic potentials; [NequIP](https://arxiv.org/abs/2101.03164) is a research example using equivariant representations.
+
+The assumptions still matter. Not every force in every physical setting is the gradient of a position-only scalar potential.
+
+## The symmetry you did not mean to impose
+
+Rotations with determinant one form $SO(3)$. Allow determinant minus one as well and we obtain $O(3)$, which includes reflections. A distance-only model cannot distinguish mirror-image configurations with corresponding labels because their pairwise distances match.
+
+Consider the signed volume
+
+$$
+V=\det\begin{bmatrix}r_2-r_1&r_3-r_1&r_4-r_1\end{bmatrix}.
+$$
+
+After an orthogonal transformation $R$,
+
+$$
+V'=\det(R)V.
+$$
+
+A rotation preserves the sign. A reflection reverses it. The quantity can therefore encode handedness for an ordered set of points, although handling atom permutations correctly requires additional care.
+
+For some targets, reflection invariance is appropriate. For a target sensitive to molecular chirality, it can erase exactly the distinction we need. The [ChIRo paper](https://arxiv.org/abs/2110.04383) explores representations for chiral-sensitive molecular learning.
+
+This is why “more symmetry” is not automatically better. Architecture should respect transformations that preserve the task, rather than every transformation that makes the mathematics convenient.
+
+## What remains to be learned
+
+When $f$ is invariant, it assigns one output to every orbit
+
+$$
+[x]=\{g\cdot x:g\in G\}.
+$$
+
+It is effectively a function on the quotient space $X/G$. Different coordinate descriptions of the same object no longer require independent answers.
+
+That reduces arbitrary variation. It does not remove the need for data, guarantee accurate predictions, or justify a symmetry that the real target violates.
+
+The question is clear: how should the output change if the input undergoes a particular transformation? Answering it lets the model use its capacity on distinctions that matter.
+
+## The symmetry I would question
+
+The mirror-image example is the warning I find most useful. A model can obey its symmetry constraints perfectly and still lose information the target needs. Before choosing an invariant representation, I would ask for a pair of inputs it treats as equivalent and check whether their outputs really should agree.
+
+## Reading
+
+- [Satorras, Hoogeboom, and Welling, E(n) Equivariant Graph Neural Networks](https://arxiv.org/abs/2102.09844).
+- [Batzner and colleagues, NequIP](https://arxiv.org/abs/2101.03164).
+- [Adams, Pattanaik, and Coley, Learning 3D Representations of Molecular Chirality](https://arxiv.org/abs/2110.04383).

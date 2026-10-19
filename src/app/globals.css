@@ -142,3 +142,34 @@ code[data-line-numbers-max-digits="2"] > [data-line]::before {
 code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
+/* Keep long mathematical expressions usable on small screens. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
+}
+.prose .katex { font-size: 1.05em; }
+
+.copyable-block {
+  position: relative;
+  margin: 1.5em 0;
+  padding-top: 1.75rem;
+}
+.copyable-block > pre,
+.copyable-block > .katex-display { margin-top: 0; margin-bottom: 0; }
+.article-copy-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: inherit;
+  font-size: 0.6875rem;
+  line-height: 1.25rem;
+  color: hsl(var(--muted-foreground));
+}
+.article-copy-button:hover { background: hsl(var(--muted)); color: hsl(var(--foreground)); }
+.article-copy-button:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }

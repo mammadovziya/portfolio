@@ -1,13 +1,13 @@
 ---
 title: "The SQL Programming Language"
 publishedAt: "2025-07-14"
+updatedAt: "2026-10-19"
 summary: "SQL is a structured query language used to work with databases. This post explains the basic ideas behind SQL, where it is used, and how it looks in real code."
-image: "/sql-table.png"
+category: "Programming"
+tags: ["SQL", "Databases", "Data"]
 ---
 
 **SQL** (*Structured Query Language*) is the standard language used to work with relational databases. It was created by IBM in the 1970s and is still used today in many database management systems, including **MySQL**, **PostgreSQL**, **SQLite**, **Oracle**, **SQL Server**, and others.
-
-As an extra resource, you can also watch my short 60-second video here: [SQL video](youtube-link)
 
 ## What Is SQL Used For?
 
@@ -32,11 +32,11 @@ Data is stored in rows and columns. Each table represents a specific type of inf
 
 ### 2. **Primary Key**
 
-A primary key is the unique identifier for each row in a table. It helps prevent duplicates and makes it easier to reference specific records.
+A primary key uniquely identifies a row and cannot be null. It may consist of several columns. It prevents duplicate key values, not every kind of duplicate business record.
 
 ### 3. **Foreign Key**
 
-A foreign key creates a relationship between two tables. It helps keep data organized and prevents unnecessary repetition.
+A foreign key constrains non-null referencing values to match a referenced key. It enforces referential integrity; it does not automatically eliminate repeated data. Add `NOT NULL` separately when the relationship must be present.
 
 ### 4. **Query**
 
@@ -95,7 +95,7 @@ JOIN Posts ON Users.id = Posts.user_id;
 - **Declarative:** You describe what you want, and the database system decides how to get it.
 - **Standardized:** Most relational databases use similar SQL syntax.
 - **Performance-friendly:** Queries can be optimized with indexes and database engines.
-- **Reliable:** SQL databases support data integrity and safety through principles such as ACID.
+- **Transactions and constraints:** Database engines provide mechanisms for consistency and recovery. Their guarantees depend on the engine, configuration, isolation level, and how the application uses them.
 
 ## Conclusion
 
@@ -104,3 +104,11 @@ SQL is not just another programming language. It is one of the most important sk
 Whether you are a developer, analyst, or data engineer, SQL is the tool that lets you "talk" to data.
 
 If this post was useful for you, share it and let me know what you think.
+
+## The question before a join
+
+Before running a join, I would ask whether one input row should produce one output row, several, or none. A query can be valid SQL and still count the wrong thing. Stating the intended unit of each result row makes duplicated totals easier to spot than inspecting the final number alone.
+
+## Reference
+
+[PostgreSQL’s guide to constraints](https://www.postgresql.org/docs/current/ddl-constraints.html) explains primary keys, foreign keys, and null behaviour in detail.

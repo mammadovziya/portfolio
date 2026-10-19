@@ -1,16 +1,19 @@
 ---
 title: "The Fortran Programming Language"
 publishedAt: "2025-01-13"
+updatedAt: "2026-10-19"
 summary: "One of the oldest programming languages, created by IBM in the 1950s"
+category: "Programming"
+tags: ["Fortran", "Scientific Computing", "History"]
 ---
 
 Fortran, which was originally written in all caps as FORTRAN, is one of the oldest programming languages still known today. It was created by IBM in the 1950s, and its name comes from **FORmula TRANslation**.
 
 Fortran was one of the first high-level programming languages designed specifically for scientific and engineering calculations. At the time, this was a huge step forward. It made it possible to express mathematical formulas, complex algorithms, and scientific computations in a way computers could actually run.
 
-Even after many decades, Fortran is still used in some very serious fields. You can still find it in meteorology, astrophysics, chemical modeling, nuclear physics, and other areas where performance matters. The main reason is speed. In some numerical workloads, Fortran can still compete with, and sometimes outperform, more modern languages like C++. For projects that run on supercomputers or require heavy numerical computation, that still matters a lot.
+Even after many decades, Fortran is still used in some very serious fields. You can still find it in meteorology, astrophysics, chemical modeling, nuclear physics, and other areas where performance matters. Its array-oriented features, mature compilers, numerical libraries, and existing scientific codebases all matter. Performance comparisons with C++ depend on the algorithm, implementation, compiler, and hardware. For projects that run on supercomputers or require heavy numerical computation, that still matters a lot.
 
-Fortran has also evolved over time. The first version, **Fortran I**, appeared in 1957. After that came **Fortran II**, **Fortran IV**, **Fortran 77**, **Fortran 90**, and newer versions. Each version added better syntax, new features, and more practical ways to build larger programs. **Fortran 90**, for example, introduced structured programming and module support, which made the language much more useful for bigger projects.
+Fortran has also evolved over time. The first version, **Fortran I**, appeared in 1957. After that came **Fortran II**, **Fortran IV**, **Fortran 77**, **Fortran 90**, and newer versions. Each version added better syntax, new features, and more practical ways to build larger programs. **Fortran 90**, for example, added modules, array syntax, free-form source, and derived types. Structured control flow existed before that release.
 
 When I started learning about Fortran, I noticed that there were almost no Azerbaijani-language resources for beginners. That is why I decided to create a learning website for it. The site explains Fortran's history, versions, use cases, and basic syntax. It also includes beginner-friendly lessons, code examples, and practical exercises.
 
@@ -19,3 +22,12 @@ The lessons are structured step by step, so they should be useful whether you ar
 [Click here to visit it](https://fortran.mziya.xyz).
 
 I hope it helps more people enter the world of Fortran in a simple and practical way.
+
+## What a rewrite should preserve
+
+What interests me about a scientific-code rewrite is how much numerical knowledge it preserves. Cleaner syntax is easy to see; changed tolerances, boundary conditions, or floating-point behaviour are easier to miss. I would want to know which reference calculations the replacement must reproduce before choosing the language it should use.
+
+## References
+
+- [Fortran-lang: arrays and strings](https://fortran-lang.org/learn/quickstart/arrays_strings/).
+- [Fortran-lang: program units and procedures](https://fortran-lang.org/learn/f95_features/program_units_and_procedures/).
