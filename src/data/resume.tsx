@@ -14,7 +14,7 @@ export const DATA = {
   seoDescription:
     "Portfolio of Ziya Mammadov, an AI and Computer Science student at the University of Edinburgh working on autonomous perception, computational drug discovery, and reliable AI systems.",
   summary:
-    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I build autonomous racing perception software with Edinburgh University Formula Student and collaborate with Houston Computational Drug Discovery Lab on GPU-accelerated molecular preparation. Previously, I worked on multilingual moderation and investment AI at ABB Invest. I’m interested in machine learning, computational biology, and reliable AI systems.",
+    "I’m studying AI and Computer Science at the University of Edinburgh with support from the Azerbaijani State Scholarship. I work with Edinburgh University Formula Student, developing perception software for autonomous racing cars. I also collaborate with Houston Computational Drug Discovery Lab on GPU-accelerated molecular preparation. Before that, I worked on multilingual moderation and investment AI at ABB Invest. My interests include machine learning, computational biology, and reliable AI systems.",
   avatarUrl: "https://avatars.githubusercontent.com/u/151031540?v=4",
   skills: [
     "Java",

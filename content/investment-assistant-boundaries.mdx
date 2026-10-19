@@ -1,0 +1,15 @@
+---
+title: "What happens before an AI assistant sends an answer"
+publishedAt: "2026-10-19"
+summary: "How the Governed Investment Assistant uses tools, validation, and evidence to put boundaries around a model."
+---
+
+In the Governed Investment Assistant, the answer is one part of a larger system. The project is a bilingual financial AI assistant written in TypeScript with Mastra. It combines tool-grounded portfolio analytics, governed retrieval, deterministic calculations, and signed evidence.
+
+What happens before the answer reaches the user matters. The architecture has 13 policy-gated tools and eight blocking response validators. The model does not decide on its own whether a tool call is allowed or a response is ready to send.
+
+Deterministic financial calculations give the model a narrower job: explain the results produced by tools. Retrieval supplies material for an answer, and evidence records make its basis inspectable. These controls do not prove that an answer is correct. They set conditions under which the system should refuse to proceed.
+
+The surrounding software matters too. Audit logs record activity, Prometheus provides observability, and the project includes Docker, Vitest, and Playwright. There is more to work on, but the boundaries are part of the application rather than something left entirely to the prompt.
+
+[Source code](https://github.com/mammadovziya/governed-investment-assistant)
