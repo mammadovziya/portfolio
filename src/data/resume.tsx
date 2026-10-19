@@ -9,39 +9,40 @@ export const DATA = {
   location: "Edinburgh, UK",
   locationLink: "https://www.google.com/maps/place/edinburgh",
   description:
-    "I study AI and Computer Science at Edinburgh and build AI systems for finance, computational biology, and developer workflows.",
-  seoTitle: "Ziya Mammadov — AI & Computer Science Student",
+    "I study AI and Computer Science at Edinburgh and build software for autonomous systems, computational drug discovery, and applied AI.",
+  seoTitle: "Ziya Mammadov - AI & Computer Science Student",
   seoDescription:
-    "Portfolio of Ziya Mammadov, an AI and Computer Science student at the University of Edinburgh working across AI engineering and computational biology.",
+    "Portfolio of Ziya Mammadov, an AI and Computer Science student at the University of Edinburgh working on autonomous perception, computational drug discovery, and reliable AI systems.",
   summary:
-    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I currently work as an AI Engineer Intern at ABB Invest and collaborate with Houston Lab on computational drug-discovery tooling. I’m especially interested in AI for biology, developer systems, HCI, and cognitive AI.",
+    "I’m an AI and Computer Science student at the University of Edinburgh, supported by the Azerbaijani State Scholarship. I build autonomous racing perception software with Edinburgh University Formula Student and collaborate with Houston Computational Drug Discovery Lab on GPU-accelerated molecular preparation. Previously, I worked on multilingual moderation and investment AI at ABB Invest. I’m interested in machine learning, computational biology, and reliable AI systems.",
   avatarUrl: "https://avatars.githubusercontent.com/u/151031540?v=4",
   skills: [
+    "Java",
     "Python",
+    "C++",
     "TypeScript/JavaScript",
     "SQL",
-    "C++",
-    "Java",
-    "C#",
     "Bash",
-
+    "Haskell",
+    "Spring Boot",
     "FastAPI",
     "Flask",
     "Node.js",
-    "PostgreSQL",
+    "Mastra",
     "Docker",
-    "Linux",
-    "Git",
-    "CI/CD",
     "Kubernetes",
-
+    "Git",
+    "GitLab CI/CD",
     "PyTorch",
-    "TensorFlow",
-    "NumPy",
-    "Pandas",
-    "COBRApy",
-    "Biopython",
-    "DIAMOND",
+    "LLM Integration",
+    "PostgreSQL",
+    "Redis",
+    "Distributed Systems",
+    "OOP",
+    "Functional Programming",
+    "Microservices",
+    "REST APIs",
+    "Linux",
   ],
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
@@ -74,7 +75,7 @@ export const DATA = {
       },
       Youtube: {
         name: "Youtube",
-        url: "https://www.youtube.com/@ziyamamadov",
+        url: "https://www.youtube.com/@zmmmdf",
         icon: Icons.youtube,
         navbar: true,
       },
@@ -90,16 +91,28 @@ export const DATA = {
 
   work: [
     {
+      company: "Edinburgh University Formula Student",
+      href: "https://www.eufs.co/",
+      badges: [],
+      location: "Edinburgh, UK",
+      title: "Software Engineer, Perception Team",
+      logoUrl: "/eufs.ico",
+      start: "August 2026",
+      end: "Present",
+      description:
+        "Building the autonomous racing car’s perception stack with PointPainting and PointPillars, combining LiDAR and camera data to detect and classify cones. Working on reproducible Ubuntu/GPU environments, sensor integration, and fault-tolerant software installation.",
+    },
+    {
       company: "ABB Invest",
       href: "https://abbinvest.az/",
       badges: [],
       location: "Baku, Azerbaijan",
-      title: "AI Engineer Intern",
+      title: "Software Engineer Intern",
       logoUrl: "/abb-invest.svg",
-      start: "2026",
-      end: "Present",
+      start: "July 2026",
+      end: "September 2026",
       description:
-        "Building a local-first Azerbaijani RAG API and embeddable support widget over public investment information, with cited answers, refusal and handoff controls, evaluation, and deployment safeguards.",
+        "Built XLM-RoBERTa moderation for Azerbaijani, Turkish, Russian, and English, achieving 95.6% accuracy and 95.4% F1 on a 500-case benchmark. Also developed private-information identification and an investment risk assessment API with cited sources, refusal criteria, and evaluation and deployment safeguards.",
     },
     {
       company: "MPAY",
@@ -108,15 +121,15 @@ export const DATA = {
       location: "Baku, Azerbaijan",
       title: "Software Developer Intern",
       logoUrl: "/mpay.jpg",
-      start: "June 2024",
-      end: "September 2024",
+      start: "June 2025",
+      end: "September 2025",
       description:
-        "Worked on production features and REST APIs in C# ASP.NET MVC. I also wrote integration tests, helped with CI checks, documented issues, and got used to the everyday rhythm of code reviews and GitLab workflows.",
+        "Developed authentication and REST APIs in C#/.NET and ASP.NET MVC for production self-service ATMs, supporting a migration to microservices. Automated CI/CD documentation validation, reducing preparation time by 30%, and contributed integration tests.",
     },
   ],
   research: [
     {
-      organization: "Houston Lab",
+      organization: "Houston Computational Drug Discovery Lab",
       school: "School of Biological Sciences, University of Edinburgh",
       href: "https://houstonlab.bio.ed.ac.uk/",
       location: "Edinburgh, UK",
@@ -125,9 +138,8 @@ export const DATA = {
       start: "July 2026",
       end: "Present",
       details: [
-        "Building the web platform and distributed execution layer that turns a command-line ligand-preparation and virtual-screening pipeline into a public research tool, as an open alternative to parts of the proprietary LigPrep suite.",
-        "Designing the multi-server worker architecture: job distribution across compute nodes, database-backed status tracking, shared storage, retry logic, deployment, and monitoring.",
-        "Working on lab compute infrastructure over VPN/SSH; listed as a lab collaborator and designated co-author on the planned publication of the toolkit.",
+        "Designing and releasing LibPrep, a GPU-accelerated web service for molecular preparation with distributed jobs, database-backed state, shared storage, automatic retries, and monitoring.",
+        "Implementing molecular prefiltering and state preparation with RDKit and GPU-accelerated conformer generation, achieving a median RMSD of approximately 0.54 Å on a public benchmark.",
       ],
     },
   ],
@@ -137,13 +149,49 @@ export const DATA = {
       href: "https://www.ed.ac.uk/",
       degree: "BSc (Hons) Artificial Intelligence and Computer Science",
       logoUrl: "/edinburghuniversity.svg",
-      start: "2025",
+      start: "September 2025",
       end: "2029",
       description:
-        "Current focus: AI, cognitive science, functional programming, databases, algorithms, data structures, and linear algebra.",
+        "First-class performance; Azerbaijan State Scholarship recipient. Relevant study includes discrete mathematics and probability, computer systems, algorithms and data structures, data science, object oriented programming, reasoning and agents, software engineering, and introduction to computation.",
     },
   ],
   projects: [
+    {
+      title: "Active Learning for Drug Discovery",
+      category: "AI for Bio",
+      featured: false,
+      href: "",
+      dates: "Ongoing",
+      active: true,
+      description:
+        "Collaborating on an active-learning project involving approximately 5,000 compounds with noisy, highly imbalanced biological labels. The project will compare random forests and graph neural networks to select relevant compounds within a limited assay budget.",
+      proof: ["~5,000 compounds", "Limited assay budget"],
+      technologies: ["Active Learning", "Random Forests", "Graph Neural Networks"],
+      links: [],
+      image: "",
+      video: "",
+    },
+    {
+      title: "Governed Investment Assistant",
+      category: "Applied AI",
+      featured: true,
+      href: "https://github.com/mammadovziya/governed-investment-assistant",
+      dates: "2026",
+      active: true,
+      description:
+        "A bilingual financial AI assistant built with TypeScript and Mastra, combining tool-grounded portfolio analytics, governed RAG, deterministic calculations, and signed evidence. A fail-closed architecture gates tools and validates responses before delivery.",
+      proof: ["13 policy-gated tools", "8 blocking validators", "Signed evidence"],
+      technologies: ["TypeScript", "Mastra", "RAG", "Docker", "Prometheus", "Vitest", "Playwright"],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/mammadovziya/governed-investment-assistant",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "https://opengraph.githubassets.com/portfolio/mammadovziya/governed-investment-assistant",
+      video: "",
+    },
     {
       title: "gemiz",
       category: "AI for Bio",
@@ -233,7 +281,7 @@ export const DATA = {
     {
       title: "library-prep-pipeline",
       category: "AI for Bio",
-      featured: false,
+      featured: true,
       href: "https://github.com/mammadovziya/library-prep-pipeline",
       dates: "2026",
       active: true,
@@ -327,7 +375,7 @@ export const DATA = {
     {
       title: "Social Media Moderation",
       category: "Applied AI",
-      featured: true,
+      featured: false,
       href: "https://github.com/mammadovziya/social_media_moderation",
       dates: "2026",
       active: true,
@@ -378,7 +426,7 @@ export const DATA = {
     {
       title: "Open-Source Python Libraries",
       category: "Open Source",
-      featured: true,
+      featured: false,
       href: "https://pypi.org/user/mammadovziya/",
       dates: "2022 - Present",
       active: true,
@@ -430,16 +478,16 @@ export const DATA = {
   awards: [
     {
       title: "Fully-Funded State Scholarship",
-      issuer: "Republic of Azerbaijan — Ministry of Science and Education",
+      issuer: "Republic of Azerbaijan - Ministry of Science and Education",
       href: "https://dp.edu.az/",
       logoUrl: "/dp-logo.png",
       start: "2025",
       end: "2029",
       description:
-        "A national scholarship from Azerbaijan that covers my studies and living costs at the University of Edinburgh.",
+        "Fully funded studies and living costs at the University of Edinburgh through Azerbaijan’s State Program, awarded to 125 top-performing students nationwide entering bachelor’s programmes.",
     },
     {
-      title: "Bronze Medal — National Olympiad in Informatics",
+      title: "Bronze Medal - National Olympiad in Informatics",
       issuer: "Ministry of Science and Education, Republic of Azerbaijan",
       href:
         "https://edu.gov.az/uploads/olimpiada/rfo/2023/%C4%B0nformatika-8-9.pdf",
@@ -449,12 +497,42 @@ export const DATA = {
       description:
         "Earned a bronze medal in Azerbaijan’s 2023 National Olympiad in Informatics.",
     },
+    {
+      title: "Golden Diploma & School Book of Honor",
+      issuer: "Ministry of Science and Education, Republic of Azerbaijan",
+      href: "",
+      logoUrl: "/edu-logo.png",
+      start: "2025",
+      end: "2025",
+      description:
+        "The only student in my school awarded the Golden Diploma, with a 5/5 GPA and selection for the school’s Book of Honor.",
+    },
   ],
   volunteer: [
     {
-      organization: "School Volunteer Programme",
-      href: "",
-      logoUrl: "",
+      organization: "University of Edinburgh",
+      href: "https://www.ed.ac.uk/",
+      logoUrl: "/edinburghuniversity.svg",
+      title: "Academic Parent",
+      start: "2026",
+      end: "Present",
+      description:
+        "Mentoring first-year Informatics students with academic and social guidance.",
+    },
+    {
+      organization: "Azerbaijan Society, University of Edinburgh",
+      href: "https://uoe-azerbaijansociety.uk/",
+      logoUrl: "/azerbaijan-society.png",
+      title: "Event Organiser",
+      start: "2025",
+      end: "2026",
+      description:
+        "Organised cultural and networking events for 50+ attendees, including Nowruz and Solidarity Day. Managed venue bookings, catering, promotion, and on-site coordination.",
+    },
+    {
+      organization: "Bir Könüllü - School Volunteer Programme",
+      href: "https://t.me/birkonullu",
+      logoUrl: "/birkonullu.jpg",
       title: "Head Coordinator",
       start: "January 2024",
       end: "June 2025",

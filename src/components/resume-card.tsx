@@ -83,7 +83,11 @@ export const ResumeCard = ({
           <AvatarImage
             src={logoUrl}
             alt={altText}
-            className="object-contain"
+            className={cn(
+              "object-contain",
+              !["/mpay.jpg", "/edu-logo.png", "/azerbaijan-society.png", "/birkonullu.jpg"].includes(logoUrl) && "p-1.5",
+              logoUrl === "/eufs.ico" && "bg-black"
+            )}
           />
           <AvatarFallback>{altText[0]}</AvatarFallback>
         </Avatar>

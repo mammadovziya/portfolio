@@ -53,15 +53,15 @@ const profilePageJsonLd = {
         url: `${DATA.url}/`,
         image: `${DATA.url}/me.jpg`,
         description: DATA.seoDescription,
-        jobTitle: ["AI Engineer Intern", "Research Collaborator"],
+        jobTitle: ["Software Engineer, Perception Team", "Research Collaborator"],
         worksFor: {
           "@type": "Organization",
-          name: "ABB Invest",
-          url: "https://abbinvest.az/",
+          name: "Edinburgh University Formula Student",
+          url: "https://www.eufs.co/",
         },
         affiliation: {
           "@type": "Organization",
-          name: "Houston Lab",
+          name: "Houston Computational Drug Discovery Lab",
           url: "https://houstonlab.bio.ed.ac.uk/",
           parentOrganization: {
             "@type": "CollegeOrUniversity",
@@ -501,7 +501,7 @@ export default async function Page() {
       <section id="volunteer">
         <div className="flex min-h-0 flex-col gap-y-3">
           <BlurFade delay={BLUR_FADE_DELAY * 15.5}>
-            <h2 className="text-xl font-bold">Volunteer</h2>
+            <h2 className="text-xl font-bold">Leadership & Volunteering</h2>
           </BlurFade>
           {DATA.volunteer.map((v, id) => (
             <BlurFade
