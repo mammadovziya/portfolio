@@ -1,5 +1,6 @@
 "use client";
 
+import { formatShortDate } from "@/lib/utils";
 import { useState } from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import Link from "next/link";
@@ -49,7 +50,7 @@ export function BlogExplorer({ posts }: { posts: BlogEntry[] }) {
         {filtered.map((post) => (
           <article key={post.slug} className="py-5 first:pt-0">
             <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <time dateTime={post.publishedAt}>{new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(post.publishedAt))}</time>
+              <time dateTime={post.publishedAt}>{formatShortDate(post.publishedAt)}</time>
               <span aria-hidden="true">·</span>
               <span>{post.readingMinutes} min read</span>
               <span aria-hidden="true">·</span>

@@ -4,7 +4,7 @@ import { ArticleBack } from "@/components/article-back";
 import { ArticleCitation } from "@/components/article-citation";
 import { getBlogPosts, getPost } from "@/data/blog";
 import { DATA } from "@/data/resume";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatShortDate } from "@/lib/utils";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -133,7 +133,7 @@ export default async function Blog({
           </p>
         </Suspense>
         <span className="text-xs text-muted-foreground">{post.readingMinutes} min read</span>
-        {post.metadata.updatedAt && <p className="text-xs text-muted-foreground">Updated {new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(post.metadata.updatedAt))}</p>}
+        {post.metadata.updatedAt && <p className="text-xs text-muted-foreground">Updated {formatShortDate(post.metadata.updatedAt)}</p>}
       </div>
       <div className="mb-6 flex flex-wrap gap-2" aria-label="Post topics">
         {post.metadata.category && <Link href={`/blog?category=${encodeURIComponent(post.metadata.category)}`} className="rounded-full border px-2.5 py-1 text-xs hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{post.metadata.category}</Link>}

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
-import { ArrowRightIcon, MailIcon } from "lucide-react";
+import { ArrowRightIcon, MailIcon, MapPin } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import Markdown from "react-markdown";
@@ -112,6 +112,12 @@ export default function Page() {
                   delay={BLUR_FADE_DELAY}
                   text={DATA.description}
                 />
+                <BlurFade delay={BLUR_FADE_DELAY * 1.5}>
+                  <p className="flex items-center gap-1.5 pt-1 text-xs text-muted-foreground">
+                    <MapPin aria-hidden="true" className="size-3.5" />
+                    Edinburgh, UK
+                  </p>
+                </BlurFade>
               </div>
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
                 <div className="flex flex-wrap gap-2">
